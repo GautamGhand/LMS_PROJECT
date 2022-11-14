@@ -1,0 +1,221 @@
+.body
+{
+    margin:0;
+    padding:0;
+    display: flex;
+    
+}
+
+.drop
+{
+    background:green;
+}
+.form
+{
+    background-color:white;
+    margin-left:500px;
+    margin-top:200px;
+    width:30%;
+}
+.txt
+{
+    padding:20px;
+    display: block;
+}
+.inpt
+{
+    width:90%;
+    padding:10px;
+    margin-left:10px;
+}
+.btnn
+{
+    margin-left:10px;
+    width:90%;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.heading
+{
+    margin-left:10px;
+}
+.menu_bar
+{
+    padding-top:20px;
+    background-color: rgb(16,55,92);
+    width:20%;
+    height:100vh;
+}
+.menu_link
+{
+    padding:5px;
+}
+.menu_link a
+{
+    text-decoration:none;
+    font-size:30px;
+    color:white;
+}
+.menu_link:hover
+{
+    width:100%;
+    background-color:rgb(130, 129, 129);
+}
+.side
+{
+    margin-left:980px;
+}
+.menu_img img
+{
+    width:100%;
+    height:100%;
+}
+.tbl
+{
+    width:108%;
+}
+#tblc
+{
+    width:108%;
+}
+.edit
+{
+    margin-left:100px;
+    margin-top:50px;
+    border:2px solid black;
+    border-radius:20px;
+    padding:20px;
+    width:50%;
+    height:520px;
+}
+.create
+{
+    margin-left:100px;
+    margin-top:50px;
+    border:2px solid black;
+    border-radius:20px;
+    padding:20px;
+    width:50%;
+    height:540px; 
+}
+.buttons
+{
+    margin-top:10px;
+}
+.active
+{
+    background-color:green;
+    font-size:14px;
+    border-radius:9px;
+    width:100%;
+    text-align: center;
+}
+.inactive
+{
+    background-color:red;
+    font-size:14px;
+    border-radius:9px;
+    width:100%;
+    text-align: center;
+}
+.active_category
+{
+    background-color:green;
+    font-size:14px;
+    border-radius:9px;
+    width:80%;
+    text-align: center;
+}
+.inactive_category
+{
+    background-color:red;
+    font-size:14px;
+    border-radius:9px;
+    width:80%;
+    text-align: center;
+}
+.dropbtn
+{
+    background-color: white;
+}
+.email
+{
+    display: block;
+}
+.editbtn
+{
+    text-decoration: none;
+    padding:2px;
+    color:red;
+}
+.delete
+{
+    border:none;
+    color:red;
+}
+.details-nav
+{
+    margin-top:10px;
+    margin-bottom:5px;
+}
+.createbtn
+{
+    margin-left:1000px;
+    margin-top:10px;
+    margin-bottom:5px;
+}
+.all
+{
+    margin-top:10px;
+    display: flex;
+    justify-content: space-between;
+}
+.dots
+{
+    border: none;
+    background-color: transparent;
+}
+.d-flex{
+    width: 100%;
+    margin-bottom: 10px;
+}
+.d-flex i{
+    position:relative;
+    right: 30px;
+    top: 7px;
+}
+#hovereffect li{
+    color: rgb(16,55,92);
+}
+#hovereffect{
+    background-color: rgb(243,244,246);
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    width:100%;
+}
+#button
+{
+    margin-right:10px;
+}
+.create_user
+{
+    display: flex;
+    justify-content:space-between;
+
+}
+.table th
+{
+    background:rgb(229,241,250) !important;
+}
+#smallbtn
+{
+    height:10%;
+    padding:10px;
+    width:15%;
+}
+#dropdownMenuButton1
+{
+    background-color: white;
+    color:black;
+}
+
