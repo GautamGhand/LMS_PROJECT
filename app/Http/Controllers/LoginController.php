@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+
+    public function index()
+    {
+        return view('login');
+    }
     public function login(Request $request)
     {
         $credentials = $request->validate(
@@ -18,22 +23,17 @@ class LoginController extends Controller
             ]
         );
 
-        $user = User::where('email',$request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
         if ($user->is_emailstatusactive)
         {
             if (Auth::attempt($credentials))
             {
-              
-                if ($user->is_employee)
-                {
-                    return redirect()->route('employee');
-                }
-
-                    return redirect()->route('dashboard');
+                return redirect('/');
 
             }
         }
+
         return back()->with('success','User Not Found');
         
     }

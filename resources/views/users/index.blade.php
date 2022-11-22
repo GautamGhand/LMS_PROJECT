@@ -27,6 +27,7 @@
                     All User Type
                   </button>
                   <ul class="dropdown-menu menu">
+                    <a class="dropdown-item" href="{{ route('users.index') }}">All</a>
                     @foreach($roles as $role)
                     <li>
                         <a class="dropdown-item" href="{{ route('users.index') }}?role={{$role->id}}">{{$role->name}}</a>
@@ -101,6 +102,9 @@
                          </tr>
                 @endforeach
             </table>
+
+            {{$users->links()}}
+
         </section>
     </main>
 </section>

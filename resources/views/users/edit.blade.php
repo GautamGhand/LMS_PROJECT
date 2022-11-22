@@ -27,14 +27,29 @@
         </div>
         <label for="phone" class="form-label">Contact</label>
         <input type="number" name="phone" class="form-control" value="{{ $user->phone }}" required>
-        <span class="text-danger">
+        <div class="text-danger">
             @error('phone')
                 {{$message}}
             @enderror
-        </span>
+        </div>
+        <div>
+        @if(Auth::user()->is_subadmin)
+            <label for="role_id" class="form-label">Role</label>
+            </div>
+            <select name="role_id">
+                @foreach($roles as $role)
+                    <option value="{{ $role->id }}" @if($user->role_id==$role->id) Selected @endif>{{ $role->name }}</option>
+                @endforeach
+            </select>
+        @endif
+        <div class="text-danger">
+            @error('role_id')
+                {{$message}}
+            @enderror
+        </div>
         <div class="buttons">
-            <input type="submit" value="Update" name="addUser" class="btn btn-primary">
-            <a href="{{ route('users.index') }}"  class="btn btn-primary">CANCEL</a>
+            <input type="submit" value="Update Profile" name="addUser" class="btn btn-secondary">
+            <a href="{{ route('users.index') }}"  class="btn btn-secondary">CANCEL</a>
         </div>
     </form>
 </section>

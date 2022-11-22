@@ -24,7 +24,7 @@
             </ul>
             </div>
         </div>
-    <table class="table details-table" id="tblc" cellspacing=0>
+    <table class="table details-table tbl">
     <th>NAME</th>
     <th>CREATED BY</th> 
     <th>COURSES</th>
@@ -79,6 +79,7 @@
                     </li>
                 @endif
                 </ul>
+            </div>
         </td>
         </tr>
         @endforeach

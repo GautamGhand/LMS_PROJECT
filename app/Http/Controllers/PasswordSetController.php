@@ -45,10 +45,7 @@ class PasswordSetController extends Controller
                 
             }
         }
-        else
-        {
             return back()->with('success','You Have Set Your Password');
-        }
 
     }
 

@@ -11,7 +11,7 @@ class CategoryController extends Controller
     public function index()
     {
         return view('categories.index', [
-            'categories' => Category::search(request(['search','newest']))->get(),
+            'categories' => Category::where('user_id',Auth::id())->search(request(['search','newest']))->get(),
         ]);
     }
 
@@ -26,8 +26,7 @@ class CategoryController extends Controller
             ]);
     
         $attributes+=[
-            'slug' => strtolower($request->name),
-            'created_by' => Auth::id()
+            'user_id' => Auth::id()
         ];
     
         Category::create($attributes);

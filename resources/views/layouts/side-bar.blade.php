@@ -14,8 +14,8 @@
         <a href="{{ route('categories.index') }}">Categories</a>
     </div>
     @endif
-    <div class="menu_link">
-        <a href="">Courses</a>
+    <div class="menu_link" id="{{ Request::url() == route('courses.index') ? 'hovereffect' : '' }}">
+        <a href="{{ route('courses.index') }}">Courses</a>
     </div>
     <div class="menu_link">
         <a href="">Reports</a>

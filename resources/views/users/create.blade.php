@@ -1,6 +1,8 @@
 @include('layouts.main')
 @include('layouts.side-bar')
+
 <section class="create">
+    @include('flash-message')
     <form action="{{ route('users.store') }}" method="POST" class="loginForm addUser">
         @csrf
         <h1>Create User</h1>
@@ -63,8 +65,9 @@
             @enderror
         </div>
         <div class="buttons">
-            <input type="submit" value="Create" name="addUser" class="btn btn-primary">
-            <a href="{{ route('users.index') }}"  class="btn btn-primary">CANCEL</a>
+            <input type="submit" value="Invite User" name="submit" class="btn btn-secondary">
+            <input type="submit" value="Invite User & Invite Another" name="submit" class="btn btn-secondary">
+            <a href="{{ route('users.index') }}"  class="btn btn-secondary">CANCEL</a>
         </div>
     </form>
 </section>

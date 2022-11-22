@@ -16,11 +16,10 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('created_by');
-            $table->string('slug')->nullable();
+            $table->foreignId('user_id')->constrained();
+            $table->string('slug')->unique();
             $table->boolean('status')->default(0);
             $table->timestamps();
-            $table->foreign('created_by')->references('id')->on('users');
         });
     }
 

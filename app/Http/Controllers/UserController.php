@@ -15,12 +15,13 @@ use Illuminate\Validation\Rule;
 class UserController extends Controller
 {
 
+
     public function index() {
         
         $roles=Role::where('slug','!=','admin')->get();
 
         return view('users.index', [
-            'users' => User::search(request(['search','role','newest']))->get(),
+            'users' => User::search(request(['search','role','newest']))->paginate(10),
             'roles' => $roles
         ]);
     }
@@ -40,7 +41,7 @@ class UserController extends Controller
 
         $roles=Role::where('slug','!=','admin')->get();
 
-        $roles=$roles->pluck('id')->toArray();
+        $roles=$roles->pluck('id');
 
        $attributes=$request->validate([
             'first_name' => 'required|string|min:3|max:255',
@@ -50,14 +51,13 @@ class UserController extends Controller
             'email' => 'required|email',
             'role_id' => [
                 'required',
-                Rule::in(array_values($roles))
+                Rule::in($roles)
             ]
        ]
         );
 
         $attributes+=[
             'created_by'=> Auth::id(),
-            'slug' => $request->first_name."-".$request->last_name
         ];
 
         $usr=User::where('email',$request->email)->withTrashed()->first();
@@ -81,16 +81,17 @@ class UserController extends Controller
         {
             $user = User::create($attributes);
 
-            if ($user){
-                // Notification::send($user, new UserNotification(Auth::user()));
+            if ($request->get('submit')=='Invite User'){
 
                 Notification::send($user, new SetPassowrdNotification(Auth::user()));
                 
-                // $expiresAt = now()->addDay();
-                // $user->sendWelcomeNotification($expiresAt);
                 return redirect()->route('users.index')->with('success', 'User created successfully');
             }
-            return back();
+
+            Notification::send($user, new SetPassowrdNotification(Auth::user()));
+            
+            return redirect()->route('users.create')->with('success', 'User created successfully');
+            
         }
 
         return back();
@@ -98,18 +99,30 @@ class UserController extends Controller
     }
 
     public function edit(User $user) {
+
+        $roles=Role::where('slug','!=','admin')->get();
+
         return view('users.edit', [
             'user' => $user,
+            'roles' => $roles
         ]);
 
     }
 
     public function update(Request $request, User $user) {
 
+        $roles=Role::where('slug','!=','admin')->get();
+
+        $roles=$roles->pluck('id');
+
        $attributes= $request->validate([
             'first_name' => 'required|string|min:3|max:255',
             'last_name' => 'required|string|min:3|max:255',
             'phone' => 'required|max:10',
+            'role_id' => [
+                'required',
+                Rule::in($roles)
+            ]
             ]
         );
         $user->update($attributes);

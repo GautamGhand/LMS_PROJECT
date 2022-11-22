@@ -12,7 +12,7 @@
     @enderror
     </div>
     <div class="buttons">
-        <input type="submit" value="CREATE" name="submit" class="btn btn-primary btnn">
+        <input type="submit" value="CREATE" name="submit" class="btn btn-secondary btnn">
     </div>
     </form>
     </section

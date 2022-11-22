@@ -14,4 +14,9 @@ class Role extends Model
     CONST TRAINER=3;
     CONST EMPLOYEE=4;
 
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
+
 }

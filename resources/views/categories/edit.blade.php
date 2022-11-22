@@ -10,6 +10,6 @@
              {{$message}}
             @enderror
             </div>
-        <input type="submit" value="Update" name="submit" class="btn btn-primary btnn">
+        <input type="submit" value="Update" name="submit" class="btn btn-secondary btnn">
         </form>
     </section

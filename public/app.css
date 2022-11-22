@@ -3,7 +3,7 @@
     margin:0;
     padding:0;
     display: flex;
-    
+    background-color: rgba(233, 233, 233, 0.5);
 }
 
 .drop
@@ -45,6 +45,7 @@
     background-color: rgb(16,55,92);
     width:20%;
     height:100vh;
+    margin-right: 20px;
 }
 .menu_link
 {
@@ -72,11 +73,8 @@
 }
 .tbl
 {
-    width:108%;
-}
-#tblc
-{
-    width:108%;
+    width:100%;
+    background-color: white;
 }
 .edit
 {
@@ -213,9 +211,238 @@
     padding:10px;
     width:15%;
 }
+#smallbtn1
+{
+    height:10%;
+    padding:10px;
+    width:15%;
+    margin-right:40px;
+}
 #dropdownMenuButton1
 {
     background-color: white;
     color:black;
 }
+#dropdownMenuButton2
+{
+    background-color: white;
+    color:black;
+    border:2px solid black;
+    margin-right:650px;
+    width:20%;
+}
+#dropdownMenuButton3
+{
+    background-color: white;
+    color:black;
+    border:2px solid black;
+    position:absolute;
+    left:750px;
+    width:10%;
+}
+.edit_basic_info
+{
+    margin-left:500px;
+}
+.create_course
+{
+    display:flex;
+    flex-direction:row;
+}
+.course
+{
+    display: flex;
+}
+.course p
+{
+    margin:10px;
+}
+.main_content_course
+{
+    background-color: white;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    width:1200px;
+    display: flex;
+    margin: 10px;
+    margin-left: 0;
+    padding-right: 10px;
+    justify-content: space-between;
+}
+.courses_create_dashboard button
+{
+  border:2px solid black;
+  margin-left:-20px;
+  margin-top:-180px;
+}
+.show_title_description
+{
+    display: block;
+}
+#card-show
+{
+    padding:70px;
+    width:1200px;
+    margin-top:20px;
+    margin-left:10px;
+    margin-right:10px;
+}
+.card-contents
+{
+    display: flex;
+}
+#add_unit
+{
+    margin-left:1000px;
+    margin-top:10px;
+}
+.courses
+{
+    font-size: 40px;
+    font-weight: bold;
+    color:grey;
+}
+.status
+{
+    display: flex;
+    align-items: baseline;
+}
+.right-course-detail{
+    display: flex;
+    gap: 20px;
+}
+.right-course-detail img{
+    width: 300px;
+    height: -webkit-fill-available;
+}
+.course_show_tag a
+{
+    text-decoration: none;
+    color:rgb(128, 128, 128);
+    font-size:40px;
+}
+.course_show_tag a:hover
+{
+    color:black;
+}
 
+
+.course_units_card
+{
+    display: flex;
+    border:2px solid rgb(185, 182, 182);
+    justify-content: space-between;
+    padding:30px;
+    margin-left:5px;
+    margin-top:5px;
+}
+.show_page_buttons
+{
+    display:flex;
+    padding:20px;
+}
+.show_page_buttons a{
+    margin-right: 10px;
+}
+.name
+{
+    font-size:30px;
+}
+.title_description
+{
+    margin-left:40px;
+}
+
+#unit_edit_btn
+{
+    background-color: grey;
+}
+.edit_basic_info_show
+{
+    text-decoration: none;
+    background-color:rgb(211, 199, 199);
+    color:rgb(36, 36, 194);
+    padding:2px;
+}
+
+#category_name
+{
+    font-size: 15px;
+    font-weight:bold;
+    color:rgb(162, 162, 162);
+    background-color:rgb(220, 220, 220);
+    width:40%;
+    text-align: center;
+    margin-top:10px;
+}
+.created_by
+{
+    color:grey;
+    font-size:15px;
+    margin-left:-10px;
+    font-weight: normal;
+}
+.course_name
+{
+    font-weight: bold;
+}
+.course_description
+{
+    color:grey;
+}
+#bar
+{
+    margin-right:8px;   
+}
+.courses_link
+{
+    text-decoration: none;
+}
+#form_units_create
+{
+    width:600px;
+    height:500px;
+}
+.courses_edit_links
+{
+    display: flex;
+    margin-top:10px;
+    justify-content: space-between;
+}
+.courses_course_create
+{
+    font-size:20px;
+    text-decoration: none;
+}
+.courses_course_title
+{
+    text-decoration: none;
+    font-size:20px;
+}
+.units_create_link
+{
+    margin-top:20px;
+    margin-bottom:20px;
+}
+.status-badge{
+    border-radius: 2px;
+    font-weight: bold;
+    padding: 4px 20px;
+    display: inline;
+    font-size: 10px;
+}
+#published{
+    background-color: rgb(209, 255, 209);
+    color: rgb(17, 142, 17);
+    border: 1px solid rgba(17, 142, 17, 0.5);
+}
+#draft{
+    background-color: rgba(183, 183, 183, 0.2);
+    color: rgb(155, 153, 153);
+    border: 1px solid rgb(179, 179, 179);
+}
+#archive{
+    background-color: rgb(255, 188, 188);
+    color: rgb(255, 38, 38);
+    border: 1px solid rgba(255, 38, 38, 0.5);
+}

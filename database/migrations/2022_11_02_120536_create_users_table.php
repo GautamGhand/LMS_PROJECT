@@ -18,15 +18,16 @@ return new class extends Migration
             $table->integer('role_id');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('slug')->nullable();
+            $table->string('slug');
             $table->string('email')->unique();
-            $table->string('created_by')->nullable();
+            $table->string('created_by');
             $table->string('gender');
             $table->bigInteger('phone');
             $table->string('password')->nullable();
             $table->string('image')->nullable();
             $table->boolean('email_status')->default(0);
             $table->boolean('status')->default(0);
+            $table->boolean('email_status')->change()->default(1);
             $table->softDeletes();
             $table->timestamps();
         });

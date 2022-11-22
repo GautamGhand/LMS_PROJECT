@@ -9,17 +9,38 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\WelcomeNotification\ReceivesWelcomeNotification;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,SoftDeletes,ReceivesWelcomeNotification;
+    use HasApiTokens, HasFactory, Notifiable,SoftDeletes,ReceivesWelcomeNotification,Sluggable;
     
     CONST ACTIVE=1;
+
+    public function sluggable():array
+    {
+        return [
+            'slug' => [
+                'source' => ['first_name','last_name']
+            ]
+        ];
+    }
 
     public function role()
     {
        return  $this->belongsTo(Role::class);
+    }
+
+
+    public function categories()
+    {
+       return  $this->hasMany(Category::class);
+    }
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
     }
 
     public function getIsEmployeeAttribute() {
@@ -29,6 +50,11 @@ class User extends Authenticatable
     public function getIsTrainerAttribute()
     {
         return $this->role_id==Role::TRAINER;
+    }
+
+    public function getIsSubAdminAttribute()
+    {
+        return $this->role_id==Role::SUB_ADMIN;
     }
 
     public function getIsEmailStatusActiveAttribute()

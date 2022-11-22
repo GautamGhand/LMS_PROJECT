@@ -13,7 +13,7 @@
 <body>
     @include('flash-message')
             <section class="form">
-                <h1 class="heading">LOGIN</h1>
+                <h1 class="heading">Account Login</h1>
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                 <label class="txt">Email</label>
@@ -29,6 +29,11 @@
                 @error('password')
                     {{$message}}
                 @enderror
+                </div>
+                <div class="remember">
+                    <input type="checkbox" id="scales" name="remember">
+                    <label for="remember">Remember me</label>
+                    <a href="">Forgot Password?</a>
                 </div>
                 <input type="submit" name="submit" value="LOGIN" class="btn btn-primary btnn">
         </form>
