@@ -18,22 +18,22 @@ class LoginController extends Controller
     {
         $credentials = $request->validate(
             [
-            'email'=>'required|email',
-            'password'=>'required'
+                'email' => 'required|email:rfs,dns',
+                'password'=> 'required'
             ]
         );
 
         $user = User::where('email', $request->email)->first();
+        if ($user) {
+            if ($user->is_emailstatusactive) {
+                if (Auth::attempt($credentials))
+                {
+                    return redirect('/');
 
-        if ($user->is_emailstatusactive)
-        {
-            if (Auth::attempt($credentials))
-            {
-                return redirect('/');
-
+                }
+                return back()->with('success', 'Incorrect Details');
             }
         }
-
         return back()->with('success','User Not Found');
         
     }

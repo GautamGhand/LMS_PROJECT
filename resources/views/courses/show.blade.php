@@ -3,7 +3,7 @@
 
 <section>
     <div>
-        @include('flash-message')
+        {{-- @include('flash-message') --}}
     </div>
     @include('layouts.dashboard')
     <div>

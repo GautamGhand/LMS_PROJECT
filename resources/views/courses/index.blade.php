@@ -87,6 +87,10 @@
                         <li>
                             <i class="bi bi-pencil"></i><a href="{{ route('courses.edit', $course) }}" class="editbtn">Edit Course</a>
                         </li>
+                        <li>
+                            <i class="bi bi-radioactive"></i>
+                            <a href="" class="users_link">Users</a>
+                        </li>
                         @if($course->is_draft)
                             <li>
                                 <form action="{{ route('courses.status',['course'=>$course,'status'=>1]) }}" method="POST">

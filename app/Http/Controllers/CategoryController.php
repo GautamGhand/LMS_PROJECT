@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
     public function index()
     {
         return view('categories.index', [
-            'categories' => Category::where('user_id',Auth::id())->search(request(['search','newest']))->get(),
+            'categories' => Category::visibleTo()
+                            ->search(request(['search','newest']))
+                            ->get(),
         ]);
     }
 
@@ -25,10 +28,24 @@ class CategoryController extends Controller
                 'name' => 'required|min:3|max:255',
             ]);
     
-        $attributes+=[
+        $attributes += [
             'user_id' => Auth::id()
         ];
     
+        $category=Category::where('name', $request->name)->withTrashed()->first();
+
+        if($category)
+        {
+            if($category->deleted_at!=null)
+            {
+                $category->restore();
+
+                $category->update($attributes);
+
+                return redirect()->route('categories.index')->with('success','Category Created Successfully');
+            }
+        }
+        
         Category::create($attributes);
 
         return redirect()->route('categories.index')->with('success','Successfully Created Category');
@@ -44,7 +61,11 @@ class CategoryController extends Controller
     public function update(Request $request,Category $category)
     {
         $attributes = $request->validate([
-            'name'=> 'required|min:3|max:255',
+            'name' => ['required','min:3','max:255',
+                    Rule::in(Category::visibleto()
+                            ->get()
+                            ->pluck('id')
+                            ->toArray())]
         ]);
         
         $category->update($attributes);

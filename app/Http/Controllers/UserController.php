@@ -17,42 +17,39 @@ class UserController extends Controller
 
 
     public function index() {
-        
-        $roles=Role::where('slug','!=','admin')->get();
 
         return view('users.index', [
-            'users' => User::search(request(['search','role','newest']))->paginate(10),
-            'roles' => $roles
+            'users' => User::visibleto()
+                    ->search(request(['search','role','newest']))
+                    ->paginate(10),
+            'roles' => Role::notadmin()
+                    ->get()
         ]);
     }
 
     public function create() {
 
-        $roles=Role::where('slug','!=','admin')->get();
-
         return view('users.create',
         [
-            'roles'=>$roles
+            'roles' => Role::notadmin()
+                        ->get()
         ]);
 
     }
 
     public function store(Request $request) {
 
-        $roles=Role::where('slug','!=','admin')->get();
-
-        $roles=$roles->pluck('id');
-
        $attributes=$request->validate([
-            'first_name' => 'required|string|min:3|max:255',
-            'last_name' => 'required|string|min:3|max:255',
+            'first_name' => 'required|string|min:3|max:255|alpha',
+            'last_name' => 'required|string|min:3|max:255|alpha',
             'gender' => 'required',
-            'phone' => 'required|max:10',
-            'email' => 'required|email',
+            'phone' => 'required|numeric|digits:10',
+            'email' => 'required|email:rfc,dns',
             'role_id' => [
                 'required',
-                Rule::in($roles)
-            ]
+                Rule::in(Role::notadmin()
+                        ->get()
+                        ->pluck('id'))]
        ]
         );
 
@@ -64,34 +61,28 @@ class UserController extends Controller
 
         $exists=User::where('email',$request->email)->first();
 
-        if($exists)
-        {
+        if ($exists) {
             return redirect()->route('users.index')->with('success','User Exists');
         }
 
-        if($usr)
-        {
+        if ($usr) {
             if($usr->deleted_at!=null)
             {
                 $usr->restore();
                 $usr->update($attributes);
             }
         }
-        else
-        {
+        else {
             $user = User::create($attributes);
 
-            if ($request->get('submit')=='Invite User'){
+            Notification::send($user, new SetPassowrdNotification(Auth::user()));
 
-                Notification::send($user, new SetPassowrdNotification(Auth::user()));
-                
+            if ($request->get('submit')=='Invite User') {
                 return redirect()->route('users.index')->with('success', 'User created successfully');
             }
-
-            Notification::send($user, new SetPassowrdNotification(Auth::user()));
             
             return redirect()->route('users.create')->with('success', 'User created successfully');
-            
+      
         }
 
         return back();
@@ -100,31 +91,27 @@ class UserController extends Controller
 
     public function edit(User $user) {
 
-        $roles=Role::where('slug','!=','admin')->get();
-
         return view('users.edit', [
             'user' => $user,
-            'roles' => $roles
+            'roles' => Role::notadmin()->get()
         ]);
 
     }
 
     public function update(Request $request, User $user) {
-
-        $roles=Role::where('slug','!=','admin')->get();
-
-        $roles=$roles->pluck('id');
-
+        
        $attributes= $request->validate([
-            'first_name' => 'required|string|min:3|max:255',
-            'last_name' => 'required|string|min:3|max:255',
-            'phone' => 'required|max:10',
-            'role_id' => [
-                'required',
-                Rule::in($roles)
-            ]
-            ]
-        );
+                'first_name' => 'required|string|min:3|max:255|alpha',
+                'last_name' => 'required|string|min:3|max:255|alpha',
+                'phone' => 'required|numeric|digits:10',
+                'email' => 'required|email:rfc,dns',
+                'role_id' => [
+                    'required',
+                    Rule::in(Role::notadmin()
+                            ->get()
+                            ->pluck('id'))]
+            ]);
+
         $user->update($attributes);
 
         return redirect()->route('users.index')->with('success','User Updated Successfully');
@@ -133,6 +120,7 @@ class UserController extends Controller
     public function delete(User $user) {
 
         $user->delete();
+
         return redirect()->route('users.index')->with('success','User Deleted Successfully');
     }
 }

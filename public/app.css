@@ -446,3 +446,8 @@
     color: rgb(255, 38, 38);
     border: 1px solid rgba(255, 38, 38, 0.5);
 }
+.users_link
+{
+    text-decoration: none;
+    color:rgb(150, 103, 195)
+}

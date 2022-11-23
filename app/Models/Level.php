@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Level extends Model
 {
     use HasFactory;
+
+
+    public function scopeLevels($query)
+    {
+        return self::pluck('id')->toArray();
+    }
 }

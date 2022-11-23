@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\WelcomeNotification\ReceivesWelcomeNotification;
 use Cviebrock\EloquentSluggable\Sluggable;
-
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -60,6 +60,16 @@ class User extends Authenticatable
     public function getIsEmailStatusActiveAttribute()
     {
         return $this->email_status==self::ACTIVE;
+    }
+
+    public function getStatusActiveAttribute()
+    {
+        return $this->status==self::ACTIVE;
+    }
+
+    public function scopeVisibleTo($query)
+    {
+        return $query->where('id',Auth::id());
     }
 
     public function getFullNameAttribute()

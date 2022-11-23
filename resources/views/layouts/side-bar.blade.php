@@ -11,13 +11,16 @@
     </div>
     @if(!Auth::user()->is_trainer)
     <div class="menu_link" id="{{ Request::url() == route('categories.index') ? 'hovereffect' : '' }}">
+        <i class="bi bi-bookmark"></i>
         <a href="{{ route('categories.index') }}">Categories</a>
     </div>
     @endif
     <div class="menu_link" id="{{ Request::url() == route('courses.index') ? 'hovereffect' : '' }}">
+        <i class="bi bi-person-fill"></i>
         <a href="{{ route('courses.index') }}">Courses</a>
     </div>
     <div class="menu_link">
+        <i class="bi bi-bar-chart-fill"></i>
         <a href="">Reports</a>
     </div>
 </section>

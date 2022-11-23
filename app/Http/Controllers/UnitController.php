@@ -20,8 +20,8 @@ class UnitController extends Controller
     {
 
         $units=$request->validate([
-            'name' => 'required|min:5|string',
-            'description' => 'required|max:255|string'
+            'name' => 'required|min:3|string|max:255',
+            'description' => 'required|string|min:5'
         ]);
 
         $unit=Unit::create($units);
@@ -31,8 +31,7 @@ class UnitController extends Controller
             'unit_id' => $unit->id
         ]);
 
-        if($request->get('submit')=='Save')
-        {
+        if ($request->get('submit')=='Save') {
             return redirect()->route('courses.show',$course)->with('success','Unit Added Successfully');
         }
 
@@ -53,8 +52,8 @@ class UnitController extends Controller
     {
 
         $units=$request->validate([
-            'name' => 'required|min:3',
-            'description' => 'required|max:255|string'
+            'name' => 'required|min:3|max:255',
+            'description' => 'required|min:5|string'
         ]);
 
         $unit->update($units);

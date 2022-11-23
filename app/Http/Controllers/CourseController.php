@@ -9,14 +9,24 @@ use App\Models\CourseUnit;
 use App\Models\Level;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class CourseController extends Controller
 {
     public function index()
     {
         return view('courses.index', [
-            'courses' => Course::where('user_id', Auth::id())->search(request(['search', 'category', 'level', 'newest', 'sort', 'sort-reverse']))->get(),
-            'categories' => Category::get(),
+            'courses' => Course::visibleTo()
+                    ->search(request([
+                    'search',
+                    'category',
+                    'level',
+                    'newest',
+                    'sort', 
+                    'sort-reverse'
+                    ]))
+                    ->get(),
+            'categories' => Category::visibleto()->active()->get(),
             'levels' => Level::get()
         ]);
     }
@@ -25,7 +35,7 @@ class CourseController extends Controller
     {
         return view('courses.create', [
             'levels' => Level::get(),
-            'categories' => Category::where('user_id', Auth::id())->get()
+            'categories' => Category::visibleto()->active()->get()
         ]);
     }
 
@@ -33,34 +43,34 @@ class CourseController extends Controller
     {
 
         $courses = $request->validate([
-            'title' => 'required|min:5|string',
-            'description' => 'required|max:255|string',
-            'category_id' => 'required',
-            'level_id' => 'required',
+            'title' => 'required|min:3|string|max:255',
+            'description' => 'required|min:5|string',
+            'category_id' => ['required',
+                            Rule::in(
+                                Category::active()
+                                ->visibleTo(Auth::user())
+                                ->get()
+                                ->pluck('id')
+                                ->toArray()
+                                )
+                            ],
+            'level_id' => ['required',
+                            Rule::in(Level::levels())
+                            ],
             'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-        $imageName = time().'.'.$request->image_path->extension();  
-       
-        $image=$request->image_path->move(public_path('images'), $imageName);
-
+         ]);
 
         $courses += [
             'user_id' => Auth::id(),
             'status_id' => 3,
+            'certificate' => $request['certificate'] ? true : false,
         ];
-
-        if ($request->get('certificate')) {
-            $courses += [
-                'certificate' => 1
-            ];
-        }
 
          $course=Course::create($courses);
 
-        CourseImage::create([
+         CourseImage::create([
                 'course_id' => $course->id,
-                'image_path' => $image->getPathname()
+                'image_path' => 'xyz'
                 ]);
 
         if ($request->get('submit') == 'Create Course') {
@@ -81,7 +91,7 @@ class CourseController extends Controller
     {
         return view('courses.edit', [
             'course' => $course,
-            'categories' => Category::get(),
+            'categories' =>  Category::visibleto()->active()->get(),
             'levels' => Level::get()
         ]);
     }
@@ -89,27 +99,26 @@ class CourseController extends Controller
     public function update(Request $request, Course $course)
     {
         $courses = $request->validate([
-            'title' => 'required|min:5|string',
-            'description' => 'required|max:255|string',
-            'category_id' => 'required',
-            'level_id' => 'required'
+            'title' => 'required|min:3|string|max:255',
+            'description' => 'required|min:5|string',
+            'category_id' => ['required',
+                            Rule::in(
+                                Category::active()
+                                ->visibleTo(Auth::user())
+                                ->get()
+                                ->pluck('id')
+                                ->toArray()
+                                )
+                            ],
+            'level_id' => ['required',
+                            Rule::in(Level::levels())
+                             ],
         ]);
 
         
         $courses += [
-            'user_id' => Auth::id(),
-            'status_id' => 3,
+            'certificate' => $request['certificate'] ? true : false
         ];
-
-        if ($request->get('certificate')) {
-            $courses += [
-                'certificate' => 1
-            ];
-        }
-        else
-        {
-            $courses['certificate']=0;
-        }
 
         $course->update($courses);
 

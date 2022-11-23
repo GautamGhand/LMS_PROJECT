@@ -133,6 +133,8 @@ Route::controller(UnitController::class)->group(function()
 
 });
 
+});
+
 Route::get('/set-password/{user:slug}', [PasswordSetController::class, 'index'])->name('setpassword.index');
 
 Route::post('/set-password/{user}', [PasswordSetController::class, 'setpassword'])->name('setpassword');
@@ -144,6 +146,5 @@ Route::post('/reset-password/{user}', [ResetPasswordController::class, 'updatePa
 Route::get('/logout',[LoginController::class,'logout'])->name('logout');
 
 
-});
 
 

@@ -5,6 +5,7 @@ namespace App\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Course extends Model
 {
@@ -19,6 +20,8 @@ class Course extends Model
         'user_id',
         'status_id'
     ];
+
+    
 
     public function sluggable():array
     {
@@ -52,7 +55,7 @@ class Course extends Model
 
     public function units()
     {
-        return $this->belongsToMany(Unit::class,'course_units');
+        return $this->belongsToMany(Unit::class, 'course_units');
     }
 
     public function getIsArchivedAttribute()
@@ -68,6 +71,11 @@ class Course extends Model
     public function getIsPublishedAttribute()
     {
         return $this->status_id==Status::PUBLISHED;
+    }
+
+    public function scopeVisibleTo($query)
+    {
+        return $query->where('user_id',Auth::id());
     }
 
 

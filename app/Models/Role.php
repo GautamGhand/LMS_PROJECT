@@ -19,4 +19,9 @@ class Role extends Model
         return $this->hasMany(User::class);
     }
 
+    public function scopeNotAdmin()
+    {
+        return $this->where('slug','!=','admin');
+    }
+
 }
