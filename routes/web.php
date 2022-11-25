@@ -22,6 +22,7 @@ use App\Http\Controllers\CategoryStatusController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseStatusController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\PasswordSetController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\UnitController;
@@ -132,6 +133,12 @@ Route::controller(UnitController::class)->group(function()
     Route::delete('/courses/{unit:slug}/units/delete','delete')->name('units.delete');
 
 });
+
+Route::get('/courses/{course:slug}/enrolled', [EnrollmentController::class,'index'])->name('enrolled.index');
+
+Route::post('/courses/{course}/enrolled', [EnrollmentController::class,'store'])->name('enrolled.store');
+
+Route::delete('/courses/{course}/{user}/delete', [EnrollmentController::class,'delete'])->name('enrolled.delete');
 
 });
 

@@ -15,4 +15,5 @@ class CourseUnit extends Model
         'unit_id'
     ];
 
+
 }

@@ -53,7 +53,6 @@
     </div>
 @if($courses->count()>0)
     @foreach($courses as $course)
-    {{-- @dd($course->images); --}}
             <div class="main_content_course">
                 <div class="right-course-detail">
                         <div>
@@ -91,7 +90,7 @@
                             </li>
                             <li>
                                 <i class="bi bi-radioactive"></i>
-                                <a href="{" class="users_link">Users</a>
+                                <a href="{{ route('enrollment.index',$course) }}" class="users_link">Users</a>
                             </li>
                             @if($course->is_draft)
                                 <li>

@@ -59,9 +59,12 @@ class Course extends Model
     }
 
 
-    public function enrollusers()
+    public function enrollment()
     {
-        return $this->belongsToMany(User::class)->withPivot('id')->withTimestamps();
+        return $this->belongsToMany(User::class)
+                    ->withPivot('id')
+                    ->withTimestamps()
+                    ->using(CourseUser::class);
     }
     public function getIsArchivedAttribute()
     {
@@ -96,8 +99,6 @@ class Course extends Model
 
     public function scopeSearch($query,array $filter)
     {
-
-        dd($filter);
         $query->when($filter['search'] ?? false,function($query,$search)
         {
             return $query
@@ -106,11 +107,6 @@ class Course extends Model
         }
         );
 
-
-        if(request()->has(['search','category']) && request(['category']))
-        {
-
-        }
         $query->when($filter['category'] ?? false,function($query,$search)
         {
             return $query

@@ -43,9 +43,12 @@ class User extends Authenticatable
         return $this->hasMany(Course::class);
     }
 
-    public function enroll()
+    public function enrollment()
     {
-        return $this->belongsToMany(Course::class,'course_users')->withPivot('id')->withTimestamps();
+        return $this->belongsToMany(Course::class)
+                    ->withPivot('id')
+                    ->withTimestamps()
+                    ->using(CourseUser::class);
     }
 
     public function getIsEmployeeAttribute() {
@@ -62,6 +65,11 @@ class User extends Authenticatable
         return $this->role_id==Role::SUB_ADMIN;
     }
 
+    public function scopeEmployee($query)
+    {
+        return $query->where('role_id',Role::EMPLOYEE);
+    }
+
     public function getIsEmailStatusActiveAttribute()
     {
         return $this->email_status==self::ACTIVE;
@@ -75,6 +83,11 @@ class User extends Authenticatable
     public function scopeVisibleTo($query)
     {
         return $query->where('created_by',Auth::id());
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status',User::ACTIVE);
     }
 
     public function getFullNameAttribute()
