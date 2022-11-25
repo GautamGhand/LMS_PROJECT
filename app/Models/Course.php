@@ -58,6 +58,11 @@ class Course extends Model
         return $this->belongsToMany(Unit::class, 'course_units');
     }
 
+
+    public function enrollusers()
+    {
+        return $this->belongsToMany(User::class)->withPivot('id')->withTimestamps();
+    }
     public function getIsArchivedAttribute()
     {
         return $this->status_id==Status::ARCHIVED;
@@ -78,9 +83,21 @@ class Course extends Model
         return $query->where('user_id',Auth::id());
     }
 
+    public function scopeActive($query)
+    {
+        return $query->whereIn('category_id',Category::visibleTo(Auth::user())->active()->get()->pluck('id')->toArray());
+    }
+
+    public function images()
+    {
+        return $this->hasOne(CourseImage::class);
+    }
+
 
     public function scopeSearch($query,array $filter)
     {
+
+        dd($filter);
         $query->when($filter['search'] ?? false,function($query,$search)
         {
             return $query
@@ -89,6 +106,11 @@ class Course extends Model
         }
         );
 
+
+        if(request()->has(['search','category']) && request(['category']))
+        {
+
+        }
         $query->when($filter['category'] ?? false,function($query,$search)
         {
             return $query

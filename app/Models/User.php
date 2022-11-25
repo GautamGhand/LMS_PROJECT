@@ -43,6 +43,11 @@ class User extends Authenticatable
         return $this->hasMany(Course::class);
     }
 
+    public function enroll()
+    {
+        return $this->belongsToMany(Course::class,'course_users')->withPivot('id')->withTimestamps();
+    }
+
     public function getIsEmployeeAttribute() {
         return $this->role_id==Role::EMPLOYEE;
     }
@@ -69,7 +74,7 @@ class User extends Authenticatable
 
     public function scopeVisibleTo($query)
     {
-        return $query->where('id',Auth::id());
+        return $query->where('created_by',Auth::id());
     }
 
     public function getFullNameAttribute()

@@ -104,12 +104,12 @@ class UserController extends Controller
                 'first_name' => 'required|string|min:3|max:255|alpha',
                 'last_name' => 'required|string|min:3|max:255|alpha',
                 'phone' => 'required|numeric|digits:10',
-                'email' => 'required|email:rfc,dns',
                 'role_id' => [
                     'required',
                     Rule::in(Role::notadmin()
                             ->get()
-                            ->pluck('id'))]
+                            ->pluck('id')
+                            ->toArray())]
             ]);
 
         $user->update($attributes);

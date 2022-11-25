@@ -31,6 +31,7 @@
     <th>CREATED DATE</th>
     <th>STATUS</th>
     <th></th>
+    @if($categories->count()>0)
         @foreach($categories as $category)
         <tr>
         <td>{{$category->name}}</td>
@@ -83,6 +84,9 @@
         </td>
         </tr>
         @endforeach
+        @else
+            <h1>No Category Exists</h1>
+@endif
     </table>
 </section>
 </body>

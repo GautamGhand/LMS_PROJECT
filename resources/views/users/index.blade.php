@@ -47,6 +47,7 @@
                 <th>CREATED DATE</th>
                 <th>STATUS</th>
                 <th></th>
+         @if($users->count()>0)       
                 @foreach ($users as $user)
                     @if($user->deleted_at==null)
                         <tr>
@@ -101,6 +102,9 @@
                 @endif
                          </tr>
                 @endforeach
+           @else 
+                         <h1>No User Exists</h1>
+           @endif              
             </table>
 
             {{$users->links()}}

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained();
             $table->string('title');
             $table->text('description');
-            $table->foreignId('status_id')->constrained();
+            $table->foreignId('status_id')->constrained()->default(3);
             $table->foreignId('level_id')->constrained();
             $table->boolean('certificate')->default(0);
             $table->timestamps();

@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\CourseImage;
 use App\Models\CourseUnit;
 use App\Models\Level;
+use App\Models\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -17,6 +18,7 @@ class CourseController extends Controller
     {
         return view('courses.index', [
             'courses' => Course::visibleTo()
+                    ->active()
                     ->search(request([
                     'search',
                     'category',
@@ -62,16 +64,19 @@ class CourseController extends Controller
 
         $courses += [
             'user_id' => Auth::id(),
-            'status_id' => 3,
+            'status_id' => Status::DRAFT,
             'certificate' => $request['certificate'] ? true : false,
         ];
 
          $course=Course::create($courses);
 
+        $image=request()->file('image_path')->store('/images');
+
          CourseImage::create([
                 'course_id' => $course->id,
-                'image_path' => 'xyz'
+                'image_path' => $image
                 ]);
+
 
         if ($request->get('submit') == 'Create Course') {
             return redirect()->route('courses.index')->with('success', 'Course Created Successfully');
