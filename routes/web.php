@@ -140,6 +140,13 @@ Route::post('/courses/{course}/enrolled', [EnrollmentController::class,'store'])
 
 Route::delete('/courses/{course}/{user}/delete', [EnrollmentController::class,'delete'])->name('enrolled.delete');
 
+
+Route::get('/users/{user:slug}/courses', [CourseEnrollmentController::class,'index'])->name('courseenrolled.index');
+
+Route::post('/users/{user}/courses', [CourseEnrollmentController::class,'store'])->name('courseenrolled.store');
+
+Route::delete('/users/{user}/{course}/delete', [CourseEnrollmentController::class,'delete'])->name('courseenrolled.delete');
+
 });
 
 Route::get('/set-password/{user:slug}', [PasswordSetController::class, 'index'])->name('setpassword.index');

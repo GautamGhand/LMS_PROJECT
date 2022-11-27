@@ -69,7 +69,11 @@
                             <i class="bi bi-three-dots-vertical"></i>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><i class="bi bi-pencil"></i><a href="{{ route('users.edit', $user) }}" class="editbtn" > Edit</a></li>
+                            <li><i class="bi bi-pencil"></i><a href="{{ route('users.edit', $user) }}" class="editbtn">Edit</a></li>
+                            <li>
+                                <i class="bi bi-radioactive"></i>
+                                <a href="{{ route('courseenrolled.index',$user) }}" class="users_link">Courses</a>
+                            </li>
                             <li>
                                 <form action="{{ route('users.delete', $user) }}" method="POST">
                                     @method('DELETE')

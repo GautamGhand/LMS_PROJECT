@@ -90,7 +90,7 @@
                             </li>
                             <li>
                                 <i class="bi bi-radioactive"></i>
-                                <a href="{{ route('enrollment.index',$course) }}" class="users_link">Users</a>
+                                <a href="{{ route('enrolled.index',$course) }}" class="users_link">Users</a>
                             </li>
                             @if($course->is_draft)
                                 <li>

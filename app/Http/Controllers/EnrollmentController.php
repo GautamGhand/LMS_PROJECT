@@ -29,12 +29,11 @@ class EnrollmentController extends Controller
 
     public function store(Request $request,Course $course)
     {
-        // dd($course->status);
-        
-        // if($course->status!=Course::is_published())
-        // {
-        //     return back()->with('success','Course is not Published');
-        // }
+ 
+        if(!$course->is_published)
+        {
+            return back()->with('success','Course is not Published');
+        }
 
         $attributes = $request->validate([
              'user_ids' => 'required', [

@@ -7,7 +7,7 @@
     <ul>
         <li>
 
-            <form method="POST" action="{{ route('enrollment.store',$course) }}">
+            <form method="POST" action="{{ route('enrolled.store',$course) }}">
                 @csrf
              @foreach($users as $user)
                 <input type="checkbox" class="checkbox" name="user_ids[]" value="{{ $user->id }}">
@@ -29,7 +29,7 @@
             <td>{{ $enrolleduser->first_name }}</td>
             <td>{{ $enrolleduser->created_at }}</td>
             <td>
-                <form action="{{ route('enrollment.delete',['course' => $course,'user' => $enrolleduser]) }}" method="POST">
+                <form action="{{ route('enrolled.delete',['course' => $course,'user' => $enrolleduser]) }}" method="POST">
                     @csrf
                     @method('DELETE');
                     <input type="submit" value="Unenroll" name="submit">

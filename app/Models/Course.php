@@ -91,6 +91,11 @@ class Course extends Model
         return $query->whereIn('category_id',Category::visibleTo(Auth::user())->active()->get()->pluck('id')->toArray());
     }
 
+    public function scopeEmployee($query)
+    {
+        return $query->whereIn('user_id',User::visibleTo(Auth::user())->active()->get()->pluck('id')->toArray());
+    }
+
     public function images()
     {
         return $this->hasOne(CourseImage::class);
