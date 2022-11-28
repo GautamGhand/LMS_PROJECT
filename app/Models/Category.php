@@ -34,6 +34,11 @@ class Category extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('status',self::ACTIVE);

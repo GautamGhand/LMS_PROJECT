@@ -20,6 +20,7 @@ use Spatie\WelcomeNotification\WelcomesNewUsers;
 use App\Http\Controllers\Auth\MyWelcomeController;
 use App\Http\Controllers\CategoryStatusController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseEnrollmentController;
 use App\Http\Controllers\CourseStatusController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EnrollmentController;

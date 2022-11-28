@@ -59,7 +59,7 @@ class Course extends Model
     }
 
 
-    public function enrollment()
+    public function enrollments()
     {
         return $this->belongsToMany(User::class)
                     ->withPivot('id')

@@ -53,7 +53,7 @@
                         <tr>
                             <td class="flname">{{$user->first_name}} {{$user->last_name}}<span class="email">{{$user->email}}</span></td>
                             <td>{{$user->role->name}}</td>
-                            <td></td>
+                            <td>{{ $user->enrollments->count() }}</td>
                             <td>{{ $user->created_at->format('M-d-Y')}}
                              <SPAN class="email">{{ $user->created_at->format('h-i-A')}}</SPAN></td>
                             <td>

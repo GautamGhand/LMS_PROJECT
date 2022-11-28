@@ -36,7 +36,7 @@
         <tr>
         <td>{{$category->name}}</td>
         <td>{{$category->user->first_name}} {{$category->user->last_name}}<span class="email">{{$category->user->email}}</span></td>
-        <td></td>
+        <td>{{ $category->courses->count() }}</td>
         <td>{{ $category->created_at->format('M-d-Y')}}
             <SPAN class="email">{{ $category->created_at->format('h-i-A')}}</SPAN></td>
         </td>

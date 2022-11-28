@@ -18,12 +18,12 @@ class EnrollmentController extends Controller
             'users' => User::visibleTo(Auth::user())
                     ->active()
                     ->employee()
-                    ->whereDoesntHave('enrollment', function (Builder $query) use($course) {
+                    ->whereDoesntHave('enrollments', function (Builder $query) use($course) {
                         $query->where('course_id',$course->id);
                     })
                     ->get(),
             'course' => $course,
-            'enrolledusers' => $course->enrollment()->get()
+            'enrolledusers' => $course->enrollments()->get()
          ]);
     }
 
@@ -40,7 +40,7 @@ class EnrollmentController extends Controller
                             Rule::in(User::visibleTo(Auth::user())
                                 ->active()
                                 ->employee()
-                                ->whereDoesntHave('enrollment', function (Builder $query) use($course) {
+                                ->whereDoesntHave('enrollments', function (Builder $query) use($course) {
                                     $query->where('course_id',$course->id);
                                 })
                                 ->get()
@@ -49,14 +49,14 @@ class EnrollmentController extends Controller
                             )
                         ]
         ]);
-        $course->enrollment()->attach($attributes['user_ids']);
+        $course->enrollments()->attach($attributes['user_ids']);
 
         return back()->with('success','User Enrolled Successfully');
     }
 
     public function delete(Course $course, User $user)
     {
-        $course->enrollment()->detach($user->id);
+        $course->enrollments()->detach($user->id);
 
         return back()->with('success', 'User UnEnrolled Successfully');
     

@@ -43,7 +43,7 @@ class User extends Authenticatable
         return $this->hasMany(Course::class);
     }
 
-    public function enrollment()
+    public function enrollments()
     {
         return $this->belongsToMany(Course::class)
                     ->withPivot('id')

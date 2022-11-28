@@ -19,7 +19,7 @@
     </ul>
         </div>
 
-    <table>
+    <table class="table table-striped">
         <th>Name</th>
         <th>Enrolled Date</th>
         <th>Action</th>
@@ -31,7 +31,7 @@
             <td>
                 <form action="{{ route('enrolled.delete',['course' => $course,'user' => $enrolleduser]) }}" method="POST">
                     @csrf
-                    @method('DELETE');
+                    @method('DELETE')
                     <input type="submit" value="Unenroll" name="submit">
                 </form>
             </td>
