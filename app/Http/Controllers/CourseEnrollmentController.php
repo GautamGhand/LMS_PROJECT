@@ -18,7 +18,7 @@ class CourseEnrollmentController extends Controller
          return view('courseenrollment.index', [
              'courses' => Course::visibleTo(Auth::user())
                      ->active()
-                     ->employee()
+                     ->published()
                      ->whereDoesntHave('enrollments', function (Builder $query) use($user) {
                          $query->where('user_id',$user->id);
                      })
@@ -31,34 +31,33 @@ class CourseEnrollmentController extends Controller
      public function store(Request $request,User $user)
      {
   
-         if(!$user->is_employee)
-         {
-             return back()->with('success','User is not an Employee');
+         if (!$user->is_employee) {
+             return back()->with('alert', 'User is not an Employee');
          }
  
          $attributes = $request->validate([
-              'course_ids' => 'required', [
-                             Rule::in(Course::visibleTo(Auth::user())
-                                 ->active()
-                                 ->whereDoesntHave('enrollments', function (Builder $query) use($user) {
-                                     $query->where('user_id',$user->id);
-                                 })
-                                 ->get()
-                                 ->pluck('id')
-                                 ->toArray()
-                             )
+              'course_ids' => ['required', 
+                                // Rule::in(Course::visibleTo(Auth::user())
+                                // ->active()
+                                // ->published()
+                                // ->get()
+                                // ->pluck('id')
+                                // ->toArray())
+                            //  Rule::exists('courses')->where(function ($query) use($course) {
+                            //     return $query->where('id', $course->id);
+                            // })
                          ]
          ]);
          $user->enrollments()->attach($attributes['course_ids']);
  
-         return back()->with('success','Courses Enrolled Successfully');
+         return back()->with('success', 'Courses Enrolled Successfully');
      }
  
      public function delete(User $user,Course $course)
      {
          $user->enrollments()->detach($course->id);
  
-         return back()->with('success', 'Course UnEnrolled Successfully');
+         return back()->with('success', 'Course Unenrolled Successfully');
      
      }
 }

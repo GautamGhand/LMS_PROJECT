@@ -8,14 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function index(User $user)
+    public function index()
     {
+        if(Auth::user()->is_employee)
+        {
+            return redirect()->route('employee');
+        }
         return view('overview');
-    }
-    public function employee()
-    {
-        return view('employee',[
-            'courses' => User::find(Auth::id())->enrollments()->get()
-        ]);
     }
 }

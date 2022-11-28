@@ -3,21 +3,28 @@
 
 @include('flash-message')
 
-<div id="checkboxes">
-    <ul>
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Add Courses
+    </button>
+    <ul class="dropdown-menu">
+        <form method="POST" action="{{ route('courseenrolled.store',$user) }}">
+            @csrf
+            @foreach($courses as $course)
         <li>
-
-            <form method="POST" action="{{ route('courseenrolled.store',$user) }}">
-                @csrf
-             @foreach($courses as $course)
-                <input type="checkbox" class="checkbox" name="course_ids[]" value="{{ $course->id }}">
-                <label class="whatever" for="course_ids[]"><p class="serv-text">{{ $course->title }}</p></label>
-            @endforeach
-                <input type="submit" name="submit" value="Add">
-            </form>
+            <input type="checkbox" class="checkbox" name="course_ids[]" value="{{ $course->id }}">
+            <label class="whatever" for="course_ids[]"><p class="serv-text">{{ $course->title }}</p></label>
         </li>
+        @endforeach
+        <input type="submit" name="submit" value="Add">
+        </form>
     </ul>
-        </div>
+  </div>
+  <div class="text-danger">
+    @error('course_ids')
+        {{$message}}
+    @enderror
+</div>
 
     <table>
         <th>Course Name</th>
@@ -31,7 +38,7 @@
             <td>
                 <form action="{{ route('courseenrolled.delete',['user' => $user,'course' => $enrolledcourse]) }}" method="POST">
                     @csrf
-                    @method('DELETE');
+                    @method('DELETE')
                     <input type="submit" value="Unenroll" name="submit">
                 </form>
             </td>

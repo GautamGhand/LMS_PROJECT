@@ -7,19 +7,34 @@
     <ul>
         <li>
 
-            <form method="POST" action="{{ route('enrolled.store',$course) }}">
-                @csrf
-             @foreach($users as $user)
-                <input type="checkbox" class="checkbox" name="user_ids[]" value="{{ $user->id }}">
-                <label class="whatever" for="user_ids[]"><p class="serv-text">{{ $user->first_name }}</p></label>
-            @endforeach
-                <input type="submit" name="submit" value="Add">
-            </form>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Add Users
+                    </button>
+                    <ul class="dropdown-menu">
+                        <form method="POST" action="{{ route('enrolled.store',$course) }}">
+                            @csrf
+                            @foreach($users as $user)
+                        <li>
+                            <input type="checkbox" class="checkbox" name="user_ids[]" value="{{ $user->id }}">
+                            <label class="whatever" for="user_ids[]"><p class="serv-text">{{ $user->first_name }}</p></label>
+                        </li>
+                        @endforeach
+                        <input type="submit" name="submit" value="Add">
+                        </form>
+                    </ul>
+                  </div>
+            <div class="text-danger">
+                @error('user_ids')
+                    {{$message}}
+                @enderror
+            </div>
+
         </li>
     </ul>
         </div>
 
-    <table class="table table-striped">
+    <table>
         <th>Name</th>
         <th>Enrolled Date</th>
         <th>Action</th>

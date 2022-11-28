@@ -23,6 +23,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseEnrollmentController;
 use App\Http\Controllers\CourseStatusController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\PasswordSetController;
 use App\Http\Controllers\ResetPasswordController;
@@ -59,7 +60,7 @@ Route::middleware(['auth'])->group(function()
 
 Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
 
-Route::get('/employee', [DashboardController::class,'employee'])->name('employee');
+Route::get('/employee', [EmployeeController::class,'index'])->name('employee');
 
 Route::controller(UserController::class)->group(function()
 {
