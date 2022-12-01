@@ -15,5 +15,4 @@ class CourseUser extends Pivot
         'course_id',
         'user_id'
     ];
-
 }

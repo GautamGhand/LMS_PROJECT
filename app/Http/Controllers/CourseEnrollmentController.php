@@ -3,19 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\CourseUser;
 use App\Models\User;
+use App\Notifications\CourseEnrollmentNotification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification as NotificationsNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class CourseEnrollmentController extends Controller
 {
-     //multiple courses enrolled by a single user
+     //multiple courses enrolled by a single user (1 USER->MULTIPLE COURSES)
 
      public function index(User $user)
      {
-         return view('courseenrollment.index', [
+         return view('admin.users.course_enrolled', [
              'courses' => Course::visibleTo(Auth::user())
                      ->active()
                      ->published()
@@ -34,21 +39,30 @@ class CourseEnrollmentController extends Controller
          if (!$user->is_employee) {
              return back()->with('alert', 'User is not an Employee');
          }
- 
+
          $attributes = $request->validate([
               'course_ids' => ['required', 
-                                // Rule::in(Course::visibleTo(Auth::user())
-                                // ->active()
-                                // ->published()
-                                // ->get()
-                                // ->pluck('id')
-                                // ->toArray())
-                            //  Rule::exists('courses')->where(function ($query) use($course) {
-                            //     return $query->where('id', $course->id);
-                            // })
+                                'array',
+                                Rule::in(Course::visibleTo(Auth::user())
+                                ->active()
+                                ->published()
+                                ->whereDoesntHave('enrollments', function (Builder $query) use($user) {
+                                    $query->where('user_id',$user->id);
+                                })
+                                ->get()
+                                ->pluck('id')
+                                ->toArray())
                          ]
          ]);
+
+   
          $user->enrollments()->attach($attributes['course_ids']);
+
+         $course=Course::find($attributes['course_ids'])->pluck('title')->toArray();
+
+         $course=implode(",",$course);
+
+         Notification::send($user,new CourseEnrollmentNotification(Auth::user(),$course));
  
          return back()->with('success', 'Courses Enrolled Successfully');
      }

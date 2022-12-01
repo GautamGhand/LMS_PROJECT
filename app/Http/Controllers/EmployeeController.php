@@ -12,10 +12,13 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        return view('employee',[
+        return view('learner.index', [
             'courses' => Course::whereHas('enrollments', function($query){
-                $query->where('user_id',Auth::id());
-            })->published()->get()
+                $query->where('user_id', Auth::id());
+            })
+            ->published()
+            ->get()
         ]);
+  
     }
 }

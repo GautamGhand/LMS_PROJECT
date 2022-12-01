@@ -20,6 +20,8 @@ class UserController extends Controller
 
         return view('users.index', [
             'users' => User::visibleto()
+                    ->with('role')
+                    ->withCount('enrollments')
                     ->search(request(['search','role','newest']))
                     ->paginate(10),
             'roles' => Role::notadmin()
@@ -50,7 +52,7 @@ class UserController extends Controller
                 Rule::in(Role::notadmin()
                         ->get()
                         ->pluck('id'))]
-       ]
+            ]
         );
 
         $attributes+=[

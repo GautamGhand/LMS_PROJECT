@@ -92,54 +92,28 @@
                                 <i class="bi bi-radioactive"></i>
                                 <a href="{{ route('enrolled.index',$course) }}" class="users_link">Users</a>
                             </li>
-                            @if($course->is_draft)
-                                <li>
-                                    <form action="{{ route('courses.status',['course'=>$course,'status'=>1]) }}" method="POST">
-                                        @csrf
-                                        <i class="bi bi-radioactive"></i>
-                                        <input type="submit" class="delete" value="Published" name="submit">
-                                    </form>
-                                </li>
-                                <li>
-                                    <form action="{{ route('courses.status',['course'=>$course,'status'=>2]) }}" method="POST">
-                                        @csrf
-                                        <i class="bi bi-radioactive"></i>
-                                        <input type="submit" class="delete" value="Archived" name="submit">
-                                    </form>
-                                </li>
-                        @elseif($course->is_published)
-                            <li>
-                                <form action="{{ route('courses.status',['course'=>$course,'status'=>3]) }}" method="POST">
-                                    @csrf
-                                    <i class="bi bi-radioactive"></i>
-                                    <input type="submit" class="delete" value="Draft" name="submit">
-                                </form>
+                            <li class="drop-items">
+                                @foreach ($statuses as $status)
+                                    @if($course->status->name!=$status->name)
+                                        <div class="drop-items-icon">
+                                            <a href="{{ route('courses.status',$course)}}?statusUpdate={{$status->id}}">
+                                            @if($status->name=='Published')
+                                                <i class="bi bi-people-fill"></i>
+                                            @elseif($status->name=='Archieved')
+                                                <i class="bi bi-archive-fill"></i>
+                                            @else
+                                                <i class="bi bi-file-earmark-arrow-down-fill"></i>
+                                            @endif
+                                            {{$status->name}}</a>
+                                        </div>
+                                    @endif
+                                @endforeach
                             </li>
-                            <li>
-                                <form action="{{ route('courses.status',['course'=>$course,'status'=>2]) }}" method="POST">
-                                    @csrf
-                                    <i class="bi bi-radioactive"></i>
-                                    <input type="submit" class="delete" value="Archived" name="submit">
-                                </form>
-                            </li>
-                        @else
-                            <li>
-                                <form action="{{ route('courses.status',['course'=>$course,'status'=>3]) }}" method="POST">
-                                    @csrf
-                                    <i class="bi bi-radioactive"></i>
-                                    <input type="submit" class="delete" value="Draft" name="submit">
-                                </form>
-                            </li>
-                            <li>
-                                <form action="{{ route('courses.status',['course'=>$course,'status'=>1]) }}" method="POST">
-                                    @csrf
-                                    <i class="bi bi-radioactive"></i>
-                                    <input type="submit" class="delete" value="Published" name="submit">
-                                </form>
-                            </li>
-                        @endif
                         </ul>
-                        
+
+                        @error('statusUpdate')
+                            <p>{{$message}}</p>
+                        @enderror
                     </div>
                 </div>
             </div>

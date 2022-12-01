@@ -15,11 +15,11 @@
         </div>
         <label for="last_name" class="form-label">Last Name</label>
         <input type="text" name="last_name" class="form-control" required value="{{old('last_name')}}">
-        <span class="text-danger">
+        <div class="text-danger">
             @error('last_name')
                 {{$message}}
             @enderror
-        </span>
+        </div>
         <label for="email" class="form-label">Email</label>
         <input type="email" name="email" class="form-control" required value="{{old('email')}}">
         <div class="text-danger">

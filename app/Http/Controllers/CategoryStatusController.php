@@ -7,12 +7,21 @@ use Illuminate\Http\Request;
 
 class CategoryStatusController extends Controller
 {
-    public function status(Category $category,$status)
+    public function status(Category $category)
     {
-        $attributes=[
-            'status' => $status
-        ];
 
+        if($category->status==true)
+        {
+            $attributes=[
+                'status' => false
+            ];
+        }
+        else
+        {
+            $attributes=[
+                'status' => true
+            ];
+        }
        $category->update($attributes);
 
         return redirect()->route('categories.index');

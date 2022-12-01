@@ -16,8 +16,11 @@ class CourseController extends Controller
 {
     public function index()
     {
-        return view('courses.index', [
+        return view('trainers.courses.index', [
             'courses' => Course::visibleTo()
+                    ->with('images')
+                    ->with('category')
+                    ->with('user')
                     ->active()
                     ->search(request([
                     'search',
@@ -29,13 +32,14 @@ class CourseController extends Controller
                     ]))
                     ->get(),
             'categories' => Category::visibleto()->active()->get(),
-            'levels' => Level::get()
+            'levels' => Level::get(),
+            'statuses' => Status::get()
         ]);
     }
 
     public function create()
     {
-        return view('courses.create', [
+        return view('trainers.courses.create', [
             'levels' => Level::get(),
             'categories' => Category::visibleto()->active()->get()
         ]);
@@ -87,14 +91,14 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
-        return view('courses.show', [
+        return view('trainers.courses.show', [
             'course' => $course
         ]);
     }
 
     public function edit(Course $course)
     {
-        return view('courses.edit', [
+        return view('trainers.courses.edit', [
             'course' => $course,
             'categories' =>  Category::visibleto()->active()->get(),
             'levels' => Level::get()

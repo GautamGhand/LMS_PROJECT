@@ -43,6 +43,11 @@ class User extends Authenticatable
         return $this->hasMany(Course::class);
     }
 
+    public function course()
+    {
+        return $this->belongsToMany(Course::class, 'course_user');
+    }
+
     public function enrollments()
     {
         return $this->belongsToMany(Course::class)
@@ -59,6 +64,12 @@ class User extends Authenticatable
     {
         return $this->role_id==Role::TRAINER;
     }
+
+    public function getIsAdminAttribute()
+    {
+        return $this->role_id==Role::ADMIN;
+    }
+
 
     public function getIsSubAdminAttribute()
     {
@@ -82,7 +93,7 @@ class User extends Authenticatable
 
     public function scopeVisibleTo($query)
     {
-        return $query->where('created_by',Auth::id());
+        return $query->where('created_by', Auth::id());
     }
 
     public function scopeActive($query)
@@ -94,6 +105,7 @@ class User extends Authenticatable
     {
         return $this->first_name." ".$this->last_name;
     }
+
 
     public function scopeSearch($query,array $filter)
     {

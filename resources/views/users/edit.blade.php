@@ -33,7 +33,7 @@
             @enderror
         </div>
         <div>
-        @if(Auth::user()->is_subadmin)
+        @if(Auth::user()->is_subadmin || Auth::user()->is_admin)
             <label for="role_id" class="form-label">Role</label>
             </div>
             <select name="role_id">

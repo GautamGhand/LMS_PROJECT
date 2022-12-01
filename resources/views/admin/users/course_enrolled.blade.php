@@ -1,8 +1,9 @@
 @include('layouts.main')
 @include('layouts.side-bar')
+<section>
+@include('layouts.dashboard')
 
-@include('flash-message')
-
+<main>
 <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
       Add Courses
@@ -25,8 +26,8 @@
         {{$message}}
     @enderror
 </div>
-
-    <table>
+<section class="tbl">
+    <table class="table details-table" cellspacing=0>
         <th>Course Name</th>
         <th>Enrolled Date</th>
         <th>Action</th>
@@ -39,7 +40,7 @@
                 <form action="{{ route('courseenrolled.delete',['user' => $user,'course' => $enrolledcourse]) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <input type="submit" value="Unenroll" name="submit">
+                    <input type="submit" value="Unenroll" name="submit"class="btn btn-dark">
                 </form>
             </td>
             </tr>
@@ -47,4 +48,9 @@
 @else
     <h1>No record Found</h1>
 @endif
-</table>    
+</table>  
+</section>
+</main>  
+</section>
+</body>
+</html>

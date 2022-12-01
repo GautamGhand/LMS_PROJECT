@@ -451,3 +451,36 @@
     text-decoration: none;
     color:rgb(150, 103, 195)
 }
+.forgot-password-form
+{
+    margin:10% 35%;
+    border:2px solid black;
+    padding:20px;
+    border-radius: 20px;
+}
+.form-label
+{
+    display: flex;
+    font-size:20px;
+    font-weight: bold;
+    font-style: italic;
+}
+.email-send-button
+{
+    display: flex;
+    margin-top:10px;
+}
+.heading-forgot-password
+{
+    margin:5% 35%;
+}
+.cancel
+{
+    background-color:red;
+    text-decoration: none;
+    text-align: center;
+    padding:10px;
+    margin-left: 10px;
+    color:white;
+    border-radius:10px;
+}

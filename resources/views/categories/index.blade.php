@@ -35,13 +35,13 @@
         @foreach($categories as $category)
         <tr>
         <td>{{$category->name}}</td>
-        <td>{{$category->user->first_name}} {{$category->user->last_name}}<span class="email">{{$category->user->email}}</span></td>
-        <td>{{ $category->courses->count() }}</td>
+        <td>{{$category->user->full_name}}<span class="email">{{$category->user->email}}</span></td>
+        <td>{{ $category->courses_count }}</td>
         <td>{{ $category->created_at->format('M-d-Y')}}
             <SPAN class="email">{{ $category->created_at->format('h-i-A')}}</SPAN></td>
         </td>
         <td>
-            @if($category->status==1)
+            @if($category->status==true)
                 <p class="active_category">ACTIVE</p>
             @else
                 <p class="inactive_category">INACTIVE</p>
@@ -62,23 +62,18 @@
                         <input type="submit" class="delete" value="DELETE" name="submit">
                     </form>
                 </li>
-                    @if($category->status==1)
-                    <li>
-                        <form action="{{ route('categories.active', ['category'=> $category,'status'=> 0]) }}" method="POST">
-                            @csrf
-                            <i class="bi bi-radioactive"></i>
-                            <input type="submit" class="delete" value="DEACTIVATE" name="submit">
-                        </form>
-                    </li>
-                @else
-                    <li>
-                        <form action="{{ route('categories.active', ['category'=> $category,'status'=> 1]) }}" method="POST">
-                            @csrf
-                            <i class="bi bi-radioactive"></i>
-                            <input type="submit" class="delete" value="ACTIVATE" name="submit">
-                        </form>
-                    </li>
-                @endif
+                        <li>
+                            <form action="{{ route('categories.active', $category) }}" method="POST">
+                                @csrf
+                                @if ($category->status == true)
+                                    <i class="bi bi-radioactive"></i>
+                                     <input type="submit" class="delete" value="DEACTIVATE" name="submit">
+                                @else
+                                     <i class="bi bi-radioactive"></i>
+                                    <input type="submit" class="delete" value="ACTIVATE" name="submit">
+                                @endif
+                            </form>
+                        </li>
                 </ul>
             </div>
         </td>

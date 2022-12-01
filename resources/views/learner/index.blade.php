@@ -1,11 +1,12 @@
 @include('layouts.main')
+@include('layouts.side-bar')
 
 
 <div>
-<a href="{{ route('logout') }}" class="btn btn-primary">Logout</a>
+    <a href="{{ route('logout') }}" class="btn btn-primary">Logout</a>
 </div>
 
-
+<section>
     <table class="table table-striped">
         <th>Title</th>
         <th>Description</th>
@@ -18,3 +19,4 @@
             </tr>
     @endforeach
     </table>
+</section>

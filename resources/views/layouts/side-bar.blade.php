@@ -2,6 +2,7 @@
     <div class="menu_img">
         <img src="https://static.wixstatic.com/media/9e41e2_fb90fd7e41414c548936b423387b0554~mv2.png/v1/fill/w_538,h_108,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/SC%20Top%20Logo1.png" alt="loding">
     </div>
+    @if(!Auth::user()->is_employee)
     <div class="menu_link">
         <a href="{{ route('dashboard') }}">Overview</a>
     </div>
@@ -23,4 +24,9 @@
         <i class="bi bi-bar-chart-fill"></i>
         <a href="">Reports</a>
     </div>
+    @else
+    <div class="menu_link">
+        <a href="{{ route('employee') }}">Courses</a>
+    </div>
+    @endif
 </section>

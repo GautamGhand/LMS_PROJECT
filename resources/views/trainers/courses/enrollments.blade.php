@@ -1,7 +1,10 @@
 @include('layouts.main')
 @include('layouts.side-bar')
 
-@include('flash-message')
+
+<section>
+@include('layouts.dashboard')
+
 
 <div id="checkboxes">
     <ul>
@@ -34,7 +37,7 @@
     </ul>
         </div>
 
-    <table>
+    <table class="table table-striped">
         <th>Name</th>
         <th>Enrolled Date</th>
         <th>Action</th>
@@ -47,7 +50,7 @@
                 <form action="{{ route('enrolled.delete',['course' => $course,'user' => $enrolleduser]) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <input type="submit" value="Unenroll" name="submit">
+                    <input type="submit" value="Unenroll" name="submit" class="btn btn-dark">
                 </form>
             </td>
             </tr>
@@ -56,6 +59,9 @@
     <h1>No record Found</h1>
 @endif
 </table>    
+</section>
+</body>
+</html>
 
 
 

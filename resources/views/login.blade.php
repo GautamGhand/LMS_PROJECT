@@ -33,7 +33,7 @@
                 <div class="remember">
                     <input type="checkbox" id="scales" name="remember">
                     <label for="remember">Remember me</label>
-                    <a href="">Forgot Password?</a>
+                    <a href="{{ route('forgotpassword.index') }}">Forgot Password?</a>
                 </div>
                 <input type="submit" name="submit" value="LOGIN" class="btn btn-primary btnn">
         </form>

@@ -12,9 +12,12 @@ class CategoryController extends Controller
     public function index()
     {
         return view('categories.index', [
-            'categories' => Category::visibleTo()
-                            ->search(request(['search','newest']))
-                            ->get(),
+            'categories' => Category::with('user')->visibleTo()
+                ->search(request(
+                    ['search', 'newest']
+                ))
+                ->withCount('courses')
+                ->get(),
         ]);
     }
 
@@ -27,32 +30,30 @@ class CategoryController extends Controller
         $attributes = $request->validate([
                 'name' => 'required|min:3|max:255',
             ]);
-    
         $attributes += [
             'user_id' => Auth::id()
         ];
     
         $category=Category::where('name', $request->name)->withTrashed()->first();
-
-        if($category)
-        {
-            if($category->deleted_at!=null)
-            {
+        if ($category) {
+            if ($category->deleted_at != null) {
                 $category->restore();
-
                 $category->update($attributes);
 
-                return redirect()->route('categories.index')->with('success','Category Created Successfully');
+                return redirect()->route('categories.index')
+                    ->with('success', 'Category Created Successfully');
             }
         }
-        
         Category::create($attributes);
 
-        return redirect()->route('categories.index')->with('success','Successfully Created Category');
+        return redirect()->route('categories.index')
+            ->with('success', 'Successfully Created Category');
     }
     
     public function edit(Category $category)
     {
+
+        $this->authorize('update',$category);
 
         return view('categories.edit', [
             'category' => $category
@@ -61,17 +62,23 @@ class CategoryController extends Controller
 
     public function update(Request $request,Category $category)
     {
+        $this->authorize('update',$category);
+
         $attributes = $request->validate([
-            'name' => ['required','min:3','max:255',
-                    Rule::in(Category::visibleto()
-                            ->get()
-                            ->pluck('id')
-                            ->toArray())]
+            'name' => ['required','min:3','max:255'],
+            'category' => [
+                'required',
+                Rule::in(Category::visibleto()
+                    ->get()
+                    ->pluck('slug')
+                    ->toArray()
+                )
+            ]
         ]);
-        
         $category->update($attributes);
 
-        return redirect()->route('categories.index')->with('success','Successfully Updated Category');
+        return redirect()->route('categories.index')
+            ->with('success', 'Successfully Updated Category');
     }
     public function destroy(Category $category)
     {

@@ -17,7 +17,7 @@
     <div class="card" id="card-show">
         <div class="card-contents">
             <div>
-                <img src="https://img.freepik.com/free-vector/student-with-laptop-studying-online-course_74855-5293.jpg?w=1060&t=st=1669033315~exp=1669033915~hmac=a2b2bcf0703c5b0fffc79504c69e526822213b7a019e585742d7e61da5406f49" alt="image not found" width="200px">
+                <img src="{{ asset('storage/'.$course->images->image_path) }}" alt="Image not found" width="200px">
             </div>
             <div class="title_description">
                 <div>
@@ -46,7 +46,7 @@
             </div>
             <div>
                 <div class="show_page_buttons">
-                    <a href="{{route('units.edit',['course' => $course,'unit'=>$unit])}}"class="btn btn-primary">Edit Section</a>
+                    <a href="{{route('units.edit',[$course,$unit])}}"class="btn btn-primary">Edit Section</a>
                     <form action="{{ route('units.delete', $unit) }}" method="POST">
                         @csrf
                         @method('DELETE')

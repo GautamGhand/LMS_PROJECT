@@ -10,6 +10,12 @@
              {{$message}}
             @enderror
             </div>
+            <input type="hidden" name="category" value="{{ $category->slug }}">
+            <div class="text-danger">
+                @error('category')
+                {{$message}}
+               @enderror
+            </div>
         <input type="submit" value="Update" name="submit" class="btn btn-secondary btnn">
         </form>
     </section

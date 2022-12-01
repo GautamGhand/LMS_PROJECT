@@ -49,11 +49,14 @@
                 <th></th>
          @if($users->count()>0)       
                 @foreach ($users as $user)
+                    @if($user->is_admin)
+                        @continue
+                    @endif    
                     @if($user->deleted_at==null)
                         <tr>
-                            <td class="flname">{{$user->first_name}} {{$user->last_name}}<span class="email">{{$user->email}}</span></td>
+                            <td class="flname">{{$user->full_name}}<span class="email">{{$user->email}}</span></td>
                             <td>{{$user->role->name}}</td>
-                            <td>{{ $user->enrollments->count() }}</td>
+                            <td>{{ $user->enrollments_count }}</td>
                             <td>{{ $user->created_at->format('M-d-Y')}}
                              <SPAN class="email">{{ $user->created_at->format('h-i-A')}}</SPAN></td>
                             <td>
@@ -82,23 +85,17 @@
                                     <input type="submit" class="delete" value="DELETE" name="submit">
                                 </form>
                             </li>
-                            @if($user->status==1)
                             <li>
-                                <form action="{{ route('users.active', ['user'=> $user,'status'=> 0]) }}" method="POST">
+                                <form action="{{ route('users.active', $user) }}" method="POST">
                                     @csrf
                                     <i class="bi bi-radioactive"></i>
-                                    <input type="submit" value="DEACTIVATE" name="submit" class="delete">
+                                    @if ($user->status == true)
+                                        <input type="submit" value="DEACTIVATE" name="submit" class="delete">
+                                    @else
+                                         <input type="submit" value="ACTIVATE" name="submit" class="delete">
+                                    @endif
                                 </form>
                             </li>
-                        @else
-                           <li> 
-                                <form action="{{ route('users.active', ['user'=> $user,'status'=> 1]) }}" method="POST">
-                                    @csrf
-                                    <i class="bi bi-radioactive"></i>
-                                    <input type="submit" value="ACTIVATE" name="submit" class="delete">
-                                </form>
-                           </li>
-                        @endif
                         <li><i class="bi bi-pencil"></i><a href="{{ route('resetpassword.index', $user) }}" class="editbtn" >Reset Password</a></li>
                         </ul>
                       </div>

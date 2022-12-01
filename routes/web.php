@@ -25,7 +25,10 @@ use App\Http\Controllers\CourseStatusController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\ForgotPassword;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\PasswordSetController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserStatusController;
@@ -55,6 +58,14 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
+Route::get('/forgot-password', [ForgotPasswordController::class,'index'])->name('forgotpassword.index');
+
+Route::post('/forgot-password', [ForgotPasswordController::class,'confirmation'])->name('forgotpassword.mail');
+
+Route::get('/forgot-password/{user:slug}/edit', [ForgotPasswordController::class,'edit'])->name('forgotpassword.edit');
+
+Route::post('/forgot-password/{user}/update', [ForgotPasswordController::class,'update'])->name('forgotpassword.update');
+
 Route::middleware(['auth'])->group(function()
 {
 
@@ -77,7 +88,7 @@ Route::controller(UserController::class)->group(function()
     Route::delete('/users/{user}delete','delete')->name('users.delete');
 });
 
-Route::post('users/{user}/{status}/active', [UserStatusController::class, 'status'])->name('users.active');
+Route::post('users/{user}/active', [UserStatusController::class, 'status'])->name('users.active');
 
 Route::controller(CategoryController::class)->group(function()
 {
@@ -97,7 +108,7 @@ Route::controller(CategoryController::class)->group(function()
 
 });
 
-Route::post('categories/{category}/{status}/active', [CategoryStatusController::class, 'status'])->name('categories.active');
+Route::post('categories/{category}/active', [CategoryStatusController::class, 'status'])->name('categories.active');
 
 
 Route::controller(CourseController::class)->group(function()
@@ -118,7 +129,9 @@ Route::controller(CourseController::class)->group(function()
 
 });
 
-Route::post('/courses/{course:slug}/{status}/active', [CourseStatusController::class, 'status'])->name('courses.status');
+Route::get('/projects', [ProjectController::class,'index']);
+
+Route::get('/courses/{course:slug}/active', [CourseStatusController::class, 'status'])->name('courses.status');
 
 
 Route::controller(UnitController::class)->group(function()
