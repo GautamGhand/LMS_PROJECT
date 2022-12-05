@@ -12,7 +12,9 @@ class ProjectController extends Controller
 
         $project=Project::find(1)->with('deployments')->get();
 
-        return view('project',[
+        //Work in Progress
+
+        return view('index',[
             'projects' => dd($project)
         ]);
     }

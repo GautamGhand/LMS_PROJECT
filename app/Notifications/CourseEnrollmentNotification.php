@@ -20,7 +20,7 @@ class CourseEnrollmentNotification extends Notification
      *
      * @return void
      */
-    public function __construct(User $user,$course)
+    public function __construct(User $user,Course $course)
     {
         $this->user=$user;
         $this->course=$course;
@@ -47,7 +47,7 @@ class CourseEnrollmentNotification extends Notification
     {
         return (new MailMessage)
                     ->line('Welcome '.$notifiable->full_name)
-                    ->line('You are Enrolled in '.$this->course)
+                    ->line('You are Enrolled in '.$this->course->title)
                     ->line('Thank you for using our application!');
     }
 

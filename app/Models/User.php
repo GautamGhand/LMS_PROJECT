@@ -18,6 +18,8 @@ class User extends Authenticatable
     
     CONST ACTIVE=1;
 
+    const ADMIN = 1;
+
     public function sluggable():array
     {
         return [

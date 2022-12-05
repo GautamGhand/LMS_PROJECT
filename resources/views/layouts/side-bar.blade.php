@@ -29,4 +29,7 @@
         <a href="{{ route('employee') }}">Courses</a>
     </div>
     @endif
+    <div class="menu_link">
+        <a href="{{ route('templates') }}">Templates</a>
+    </div>
 </section>

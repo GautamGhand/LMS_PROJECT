@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Role;
+use App\Models\Template;
 use App\Models\User;
 use App\Notifications\SetPassowrdNotification;
 use App\Notifications\SetPassword;
@@ -23,7 +25,7 @@ class UserController extends Controller
                     ->with('role')
                     ->withCount('enrollments')
                     ->search(request(['search','role','newest']))
-                    ->paginate(10),
+                    ->paginate(),
             'roles' => Role::notadmin()
                     ->get()
         ]);
@@ -75,7 +77,22 @@ class UserController extends Controller
             }
         }
         else {
+
             $user = User::create($attributes);
+
+            if($user->is_trainer)
+            {
+                $categories=Template::where('owner_id',User::ADMIN)->get();
+                
+                foreach($categories as $category)
+                {
+                    Template::create([
+                        'name' => $category->name,
+                        'owner_id'=> $user->id,
+                        'parent_id' => $category->id
+                    ]);
+                }
+            }
 
             Notification::send($user, new SetPassowrdNotification(Auth::user()));
 

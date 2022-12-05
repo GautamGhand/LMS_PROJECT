@@ -71,8 +71,13 @@
                             </div>
                             </div>
                             
-                            <div>
-                                <p style="margin-top: 50px;"><i class="bi bi-bar-chart-fill" id="bar"></i>{{$course->level->name}}</p>
+                            <div style="display: flex;gap:10px">
+                                <p style="margin-top: 50px;">
+                                    <i class="bi bi-bar-chart-fill" id="bar"></i>{{$course->level->name}}
+                                </p>
+                                <p style="margin-top: 50px">
+                                    <i class="bi bi-easel" id="bar"></i>{{$course->enrollments_count}} Enrollments
+                                </p>
                             </div>
                         </div>
                 </div>

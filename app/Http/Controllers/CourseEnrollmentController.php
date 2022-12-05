@@ -58,11 +58,12 @@ class CourseEnrollmentController extends Controller
    
          $user->enrollments()->attach($attributes['course_ids']);
 
-         $course=Course::find($attributes['course_ids'])->pluck('title')->toArray();
+        $courses = Course::find($attributes['course_ids']);
 
-         $course=implode(",",$course);
+        $courses->each(function ($course) use($user) {
 
-         Notification::send($user,new CourseEnrollmentNotification(Auth::user(),$course));
+            Notification::send($user,new CourseEnrollmentNotification(Auth::user(),$course));
+        });
  
          return back()->with('success', 'Courses Enrolled Successfully');
      }

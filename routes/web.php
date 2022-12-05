@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TestingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,9 +30,13 @@ use App\Http\Controllers\ForgotPassword;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\PasswordSetController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\TemplateController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserStatusController;
+use App\Models\Course;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Support\Facades\Auth;
 
@@ -149,18 +154,68 @@ Route::controller(UnitController::class)->group(function()
 
 });
 
-Route::get('/courses/{course:slug}/enrolled', [EnrollmentController::class,'index'])->name('enrolled.index');
+Route::controller(EnrollmentController::class)->group(function () {
 
-Route::post('/courses/{course}/enrolled', [EnrollmentController::class,'store'])->name('enrolled.store');
+    Route::get('/courses/{course:slug}/enrolled', 'index')->name('enrolled.index');
 
-Route::delete('/courses/{course}/{user}/delete', [EnrollmentController::class,'delete'])->name('enrolled.delete');
+    Route::post('/courses/{course}/enrolled', 'store')->name('enrolled.store');
+
+    Route::delete('/courses/{course}/{user}/delete', 'delete')->name('enrolled.delete');
+});
 
 
-Route::get('/users/{user:slug}/courses', [CourseEnrollmentController::class,'index'])->name('courseenrolled.index');
+Route::controller(CourseEnrollmentController::class)->group(function () {
 
-Route::post('/users/{user}/courses', [CourseEnrollmentController::class,'store'])->name('courseenrolled.store');
+    Route::get('/users/{user:slug}/courses', 'index')->name('courseenrolled.index');
 
-Route::delete('/users/{user}/{course}/delete', [CourseEnrollmentController::class,'delete'])->name('courseenrolled.delete');
+    Route::post('/users/{user}/courses', 'store')->name('courseenrolled.store');
+    
+    Route::delete('/users/{user}/{course}/delete', 'delete')->name('courseenrolled.delete');
+
+});
+
+
+Route::controller(TemplateController::class)->group(function () {
+    
+    Route::get('/templates', 'index')->name('templates');
+
+    Route::get('/templates/{template}/edit', 'edit')->name('templates.edit');
+
+    Route::post('/templates/{template}/update', 'update')->name('templates.update');
+
+    Route::delete('/templates/{template}/delete', 'delete')->name('templates.delete');
+
+    Route::post('templates/{template}/push', 'push')->name('templates.push');
+
+});
+
+Route::controller(TestController::class)->group(function () {
+
+    Route::get('/courses/{course:slug}/units/{unit:slug}/tests/create', 'create')->name('tests.create');
+
+    Route::post('/courses/{course:slug}/units/{unit:slug}/tests/store', 'store')->name('tests.store');
+
+    Route::get('courses/{course:slug}/units/{unit:slug}/tests/{test}/edit', 'edit')->name('tests.edit');
+
+    Route::post('/courses/{course:slug}/units/{unit:slug}/tests/{test}/update', 'update')->name('tests.update');
+
+    Route::delete('/courses/{course:slug}/units/{unit:slug}/tests/{test}/delete', 'delete')->name('tests.delete');
+
+});
+
+Route::controller(QuestionController::class)->group(function () {
+
+    Route::get('/courses/{course:slug}/units/{unit:slug}/tests/{test}/questions/create', 'create')->name('questions.create');
+
+    Route::post('/courses/{course:slug}/units/{unit:slug}/tests/{test}/questions/store', 'store')->name('questions.store');
+
+    Route::get('courses/{course:slug}/units/{unit:slug}/tests/{test}/questions/{question}/edit', 'edit')->name('questions.edit');
+
+    Route::post('/courses/{course:slug}/units/{unit:slug}/tests/{test}/questions/{question}/update', 'update')->name('questions.update');
+
+    Route::delete('/courses/{course:slug}/units/{unit:slug}/tests/{test}/questions/{question}/delete', 'delete')->name('questions.delete');
+
+});
 
 });
 
@@ -174,6 +229,7 @@ Route::post('/reset-password/{user}', [ResetPasswordController::class, 'updatePa
 
 Route::get('/logout',[LoginController::class,'logout'])->name('logout');
 
+Route::get('testing', [TestingController::class, 'index']);
 
 
 

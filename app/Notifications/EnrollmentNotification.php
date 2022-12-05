@@ -19,7 +19,8 @@ class EnrollmentNotification extends Notification
      * @return void
      */
 
-     public $user,$course;
+     public $user;
+     public $course;
     public function __construct(User $user,Course $course)
     {
         $this->user=$user;
@@ -62,7 +63,8 @@ class EnrollmentNotification extends Notification
     {
         return [
             'to' => $notifiable,
-            'from' => $this->user
+            'from' => $this->user,
+            'message' => $notifiable->full_name.'  enrolled into '.$this->course->title.' by '.$this->user->full_name
         ];
     }
 }

@@ -10,14 +10,12 @@ class CategoryStatusController extends Controller
     public function status(Category $category)
     {
 
-        if($category->status==true)
-        {
+        if ($category->status==true) {
             $attributes=[
                 'status' => false
             ];
         }
-        else
-        {
+        else {
             $attributes=[
                 'status' => true
             ];

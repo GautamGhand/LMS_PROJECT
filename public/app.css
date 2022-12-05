@@ -46,6 +46,8 @@
     width:20%;
     height:100vh;
     margin-right: 20px;
+    position: sticky;
+    top: 0;
 }
 .menu_link
 {
@@ -330,7 +332,7 @@
 .course_units_card
 {
     display: flex;
-    border:2px solid rgb(185, 182, 182);
+    /* border:2px solid rgb(185, 182, 182); */
     justify-content: space-between;
     padding:30px;
     margin-left:5px;
@@ -483,4 +485,24 @@
     margin-left: 10px;
     color:white;
     border-radius:10px;
+}
+.course-details
+{
+    border:2px solid black;
+}
+
+.test-details{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+.questions
+{
+    display: flex;
+    justify-content: space-between;
+}
+.btnn
+{
+    display: flex;
+    justify-content: right;
 }

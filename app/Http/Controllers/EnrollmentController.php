@@ -36,7 +36,7 @@ class EnrollmentController extends Controller
     public function store(Request $request,Course $course)
     {
        if (!$course->is_published) {
-            return back()->with('alert','Course is not Published');
+            return back()->with('error','Course is not Published');
        }
 
         $attributes = $request->validate([
@@ -58,9 +58,9 @@ class EnrollmentController extends Controller
 
         $course->enrollments()->attach($attributes['user_ids']);
 
-        $user=User::find($attributes['user_ids']);
+        $users=User::find($attributes['user_ids']);
 
-        Notification::send($user,new EnrollmentNotification(Auth::user(),$course));
+        Notification::send($users, new EnrollmentNotification(Auth::user(), $course));
 
         return back()->with('success','User Enrolled Successfully');
     }

@@ -35,23 +35,36 @@
 
     <h1>Course Content</h1>
         @foreach($course->units as $unit)
-        <div class="course_units_card">
-            <div>
-                <div class="name">
-                    {{ $unit->name }}
+        <div class="course-details">
+            <div class="course_units_card">
+                <div>
+                    <div class="name">
+                        {{ $unit->name }}
+                    </div>
+                    <div>
+                        {{ $unit->description }}
+                    </div>
                 </div>
                 <div>
-                    {{ $unit->description }}
+                    <div class="show_page_buttons">
+                        <a href="{{route('units.edit',[$course,$unit])}}"class="btn btn-primary">Edit Section</a>
+                        <form action="{{ route('units.delete', $unit) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <input type="submit" value="Delete" name="submit" class="btn btn-danger">
+                        </form>
+                    </div>
                 </div>
+                
             </div>
-            <div>
-                <div class="show_page_buttons">
-                    <a href="{{route('units.edit',[$course,$unit])}}"class="btn btn-primary">Edit Section</a>
-                    <form action="{{ route('units.delete', $unit) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <input type="submit" value="Delete" name="submit" class="btn btn-danger">
-                    </form>
+            <div class="tests">
+                <div>
+                    <h1>Lessons</h1>
+                    @foreach($unit->tests as $test)
+                        <div class="name">
+                            {{ $test->name }}
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>

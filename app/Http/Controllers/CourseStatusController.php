@@ -22,7 +22,7 @@ class CourseStatusController extends Controller
                 'status_id' => $attributes['statusUpdate']
             ]);
     
-            return redirect()->route('courses.index');
+            return redirect()->route('courses.index')->with('success','Status has Been Updated Successfully');
 
     }
 }

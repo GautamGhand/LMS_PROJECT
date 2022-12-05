@@ -52,8 +52,7 @@ class CategoryController extends Controller
     
     public function edit(Category $category)
     {
-
-        $this->authorize('update',$category);
+        $this->authorize('update', $category);
 
         return view('categories.edit', [
             'category' => $category
@@ -62,19 +61,11 @@ class CategoryController extends Controller
 
     public function update(Request $request,Category $category)
     {
-        $this->authorize('update',$category);
+        $this->authorize('update', $category);
 
         $attributes = $request->validate([
-            'name' => ['required','min:3','max:255'],
-            'category' => [
-                'required',
-                Rule::in(Category::visibleto()
-                    ->get()
-                    ->pluck('slug')
-                    ->toArray()
-                )
-            ]
-        ]);
+            'name' => ['required','min:3','max:255']
+            ]);
         $category->update($attributes);
 
         return redirect()->route('categories.index')

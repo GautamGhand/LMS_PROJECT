@@ -18,9 +18,8 @@ class CourseController extends Controller
     {
         return view('trainers.courses.index', [
             'courses' => Course::visibleTo()
-                    ->with('images')
-                    ->with('category')
-                    ->with('user')
+                    ->with('images','user','category')
+                    ->withCount('enrollments')
                     ->active()
                     ->search(request([
                     'search',
