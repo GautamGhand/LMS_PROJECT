@@ -21,20 +21,12 @@
                 <label class="form-label">What Will Be The Course Name?</label>
                 <input type="text" name="title" class="form-control" value="{{ $course->title }}" required>
             </div>
-            <div class="text-danger">
-                @error('title')
-                    {{$message}}
-                @enderror
-            </div>
+            <x-error name="title"/>
             <div>
                 <label class="form-label">Provide A Brief Description For What The Course Is About?</label>
                 <textarea name="description" class="form-control" required>{{ $course->description }}</textarea>
             </div>
-            <div class="text-danger">
-                @error('description')
-                    {{$message}}
-                @enderror
-            </div>
+            <x-error name="description"/>
             <div>
                 <label class="form-label">Which Category Should The Course Be In</label>
                 <div>
@@ -45,11 +37,7 @@
                     </select>
                 </div>
             </div>
-            <div class="text-danger">
-                @error('category_id')
-                    {{$message}}
-                @enderror
-            </div>
+            <x-error name="category_id"/>
             <div>
                 <label class="form-label">What Is The Level Of The Course?</label>
                 <div>
@@ -60,11 +48,7 @@
                     </select>
                 </div>
             </div>
-            <div class="text-danger">
-                @error('level_id')
-                    {{$message}}
-                @enderror
-            </div>
+            <x-error name="level_id"/>
             <div>
                 <input type="checkbox" name="certificate" value="certificate" @if($course->certificate) checked @endif>
                 <label for="certificate" class="form-label">Certificate?</label>

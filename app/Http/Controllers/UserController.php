@@ -19,7 +19,6 @@ class UserController extends Controller
 
 
     public function index() {
-
         return view('users.index', [
             'users' => User::visibleto()
                     ->with('role')
@@ -32,13 +31,10 @@ class UserController extends Controller
     }
 
     public function create() {
-
-        return view('users.create',
-        [
+        return view('users.create', [
             'roles' => Role::notadmin()
                         ->get()
         ]);
-
     }
 
     public function store(Request $request) {
@@ -61,27 +57,29 @@ class UserController extends Controller
             'created_by'=> Auth::id(),
         ];
 
-        $usr=User::where('email',$request->email)->withTrashed()->first();
+        $usr=User::where('email',$request->email)
+                    ->withTrashed()
+                    ->first();
 
-        $exists=User::where('email',$request->email)->first();
+        $exists=User::where('email',$request->email)
+                    ->first();
 
         if ($exists) {
-            return redirect()->route('users.index')->with('success','User Exists');
+            return redirect()->route('users.index')
+                ->with('success', 'User Exists');
         }
 
         if ($usr) {
-            if($usr->deleted_at!=null)
-            {
+            if ($usr->deleted_at!=null) {
                 $usr->restore();
                 $usr->update($attributes);
             }
         }
-        else {
+        else{
 
             $user = User::create($attributes);
 
-            if($user->is_trainer)
-            {
+            if ($user->is_trainer) {
                 $categories=Template::where('owner_id',User::ADMIN)->get();
                 
                 foreach($categories as $category)
@@ -97,7 +95,7 @@ class UserController extends Controller
             Notification::send($user, new SetPassowrdNotification(Auth::user()));
 
             if ($request->get('submit')=='Invite User') {
-                return redirect()->route('users.index')->with('success', 'User created successfully');
+                return redirect()->route('users.edit', $user)->with('success', 'User created successfully');
             }
             
             return redirect()->route('users.create')->with('success', 'User created successfully');
@@ -133,13 +131,15 @@ class UserController extends Controller
 
         $user->update($attributes);
 
-        return redirect()->route('users.index')->with('success','User Updated Successfully');
+        return redirect()->route('users.edit', $user)
+            ->with('success', 'User Updated Successfully');
     }
 
     public function delete(User $user) {
 
         $user->delete();
 
-        return redirect()->route('users.index')->with('success','User Deleted Successfully');
+        return redirect()->route('users.index')
+            ->with('success', 'User Deleted Successfully');
     }
 }

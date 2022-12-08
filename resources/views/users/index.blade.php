@@ -107,9 +107,7 @@
                          <h1>No User Exists</h1>
            @endif              
             </table>
-
             {{$users->links()}}
-
         </section>
     </main>
 </section>

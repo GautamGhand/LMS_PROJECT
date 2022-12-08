@@ -102,6 +102,11 @@ class Course extends Model
         return $this->hasOne(CourseImage::class);
     }
 
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
 
     public function scopeSearch($query,array $filter)
     {

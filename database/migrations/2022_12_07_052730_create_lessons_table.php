@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('units', function (Blueprint $table) {
+        Schema::create('lessons', function (Blueprint $table) {
             $table->id();
-            $table->string('slug');
-            $table->string('name');
-            $table->text('description');
-            $table->integer('duration')->default(0);
+            $table->foreignId('unit_id')->constrained()->cascadeOnDelete();
+            $table->integer('lessonable_id');
+            $table->string('lessonable_type');
+            $table->integer('duration');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('units');
+        Schema::dropIfExists('lessons');
     }
 };

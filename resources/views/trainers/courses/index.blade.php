@@ -56,7 +56,7 @@
             <div class="main_content_course">
                 <div class="right-course-detail">
                         <div>
-                            <img src="{{ asset('storage/'.$course->images->image_path) }}" alt="Image not found">
+                            <img src="{{ asset('storage/'.$course->image->image_path) }}" alt="Image not found">
                         </div>
                         <div class="course_content">
                             <div class="course_show_tag">

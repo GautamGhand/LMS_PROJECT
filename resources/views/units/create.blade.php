@@ -13,29 +13,21 @@
         <span>Add New Unit</span>
     </div>
     <h1 class="heading">Create Unit</h1>
-    <form method="POST" action="{{ route('units.store',$course) }}" class="create" id="form_units_create">
+    <form method="POST" action="{{ route('courses.units.store',$course) }}" class="create" id="form_units_create">
         @csrf
         <div>
             <label class="form-label">Title</label>
             <input type="text" name="name" class="form-control" value="{{ old('title') }}" required>
         </div>
-        <div class="text-danger">
-            @error('name')
-                {{$message}}
-            @enderror
-        </div>
+        <x-error name="name"/>
         <div>
             <label class="form-label">Description</label>
             <textarea name="description" class="form-control" required>{{ old('description') }}</textarea>
         </div>
-        <div class="text-danger">
-            @error('description')
-                {{$message}}
-            @enderror
-        </div>
+        <x-error name="description"/>
         <div class="buttons">
             <input type="submit" name="submit" value="Save" class="btn btn-primary">
-            <form method="POST" action="{{route('units.create',$course)}}">
+            <form method="POST" action="{{route('courses.units.create',$course)}}">
                 @csrf
                 <input type="submit" name="submit" value="Save & Add Another" class="btn btn-secondary">
             </form>

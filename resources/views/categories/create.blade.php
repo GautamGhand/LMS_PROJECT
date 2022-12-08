@@ -6,11 +6,7 @@
         <h1>Create Category</h1>
     <label class="txt">NAME</label>
     <input type="text" name="name" class="inpt" required value="{{old('name')}}">
-    <div>
-    @error('name')
-    {{$message}}
-    @enderror
-    </div>
+    <x-error name="name"/>
     <div class="buttons">
         <input type="submit" value="CREATE" name="submit" class="btn btn-secondary btnn">
     </div>

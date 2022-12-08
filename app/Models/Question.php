@@ -22,4 +22,9 @@ class Question extends Model
                     ->withTimestamps()
                     ->using(TestQuestion::class);
     }
+
+    public function options()
+    {
+        return $this->hasMany(Option::class);
+    }
 }

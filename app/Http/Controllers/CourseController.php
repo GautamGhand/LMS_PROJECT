@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Course;
 use App\Models\CourseImage;
 use App\Models\CourseUnit;
+use App\Models\Image;
 use App\Models\Level;
 use App\Models\Status;
 use Illuminate\Http\Request;
@@ -75,17 +76,19 @@ class CourseController extends Controller
 
         $image=request()->file('image_path')->store('/images');
 
-         CourseImage::create([
-                'course_id' => $course->id,
-                'image_path' => $image
+         Image::create([
+                'imageable_id' => $course->id,
+                'image_path' => $image,
+                'imageable_type' => 'App\Models\Course'
                 ]);
 
 
         if ($request->get('submit') == 'Create Course') {
-            return redirect()->route('courses.index')->with('success', 'Course Created Successfully');
+            return redirect()->route('courses.edit', $course)->with('success', 'Course Created Successfully');
         }
 
-        return redirect()->route('courses.create')->with('success', 'Course Created Successfully');
+        return redirect()->route('courses.create')
+            ->with('success', 'Course Created Successfully');
     }
 
     public function show(Course $course)
@@ -130,6 +133,7 @@ class CourseController extends Controller
 
         $course->update($courses);
 
-        return redirect()->route('courses.index')->with('success', 'Course Updated Successfully');
+        return redirect()->route('courses.edit', $course)
+            ->with('success', 'Course Updated Successfully');
     }
 }

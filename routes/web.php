@@ -142,15 +142,15 @@ Route::get('/courses/{course:slug}/active', [CourseStatusController::class, 'sta
 Route::controller(UnitController::class)->group(function()
 {
     
-    Route::get('/courses/{course:slug}/units/create','create')->name('units.create');
+    Route::get('/courses/{course:slug}/units/create','create')->name('courses.units.create');
 
-    Route::post('courses/{course}/units/store','store')->name('units.store');
+    Route::post('courses/{course:slug}/units/store','store')->name('courses.units.store');
 
-    Route::get('courses/{course:slug}/units/{unit:slug}/edit','edit')->name('units.edit');
+    Route::get('courses/{course:slug}/units/{unit:slug}/edit','edit')->name('courses.units.edit');
 
-    Route::post('/courses/{course}/units/update/{unit}','update')->name('units.update');
+    Route::post('/courses/{course}/units/update/{unit}','update')->name('courses.units.update');
 
-    Route::delete('/courses/{unit:slug}/units/delete','delete')->name('units.delete');
+    Route::delete('/courses/{unit:slug}/units/delete','delete')->name('courses.units.delete');
 
 });
 
@@ -191,15 +191,15 @@ Route::controller(TemplateController::class)->group(function () {
 
 Route::controller(TestController::class)->group(function () {
 
-    Route::get('/courses/{course:slug}/units/{unit:slug}/tests/create', 'create')->name('tests.create');
+    Route::get('/courses/{course:slug}/units/{unit:slug}/tests/create', 'create')->name('courses.units.tests.create');
 
-    Route::post('/courses/{course:slug}/units/{unit:slug}/tests/store', 'store')->name('tests.store');
+    Route::post('/courses/{course:slug}/units/{unit:slug}/tests/store', 'store')->name('courses.units.tests.store');
 
-    Route::get('courses/{course:slug}/units/{unit:slug}/tests/{test}/edit', 'edit')->name('tests.edit');
+    Route::get('courses/{course:slug}/units/{unit:slug}/tests/{test}/edit', 'edit')->name('courses.units.tests.edit');
 
-    Route::post('/courses/{course:slug}/units/{unit:slug}/tests/{test}/update', 'update')->name('tests.update');
+    Route::post('/courses/{course:slug}/units/{unit:slug}/tests/{test}/update', 'update')->name('courses.units.tests.update');
 
-    Route::delete('/courses/{course:slug}/units/{unit:slug}/tests/{test}/delete', 'delete')->name('tests.delete');
+    Route::delete('/courses/units/tests/{test}/delete', 'delete')->name('courses.units.tests.delete');
 
 });
 
@@ -213,7 +213,7 @@ Route::controller(QuestionController::class)->group(function () {
 
     Route::post('/courses/{course:slug}/units/{unit:slug}/tests/{test}/questions/{question}/update', 'update')->name('questions.update');
 
-    Route::delete('/courses/{course:slug}/units/{unit:slug}/tests/{test}/questions/{question}/delete', 'delete')->name('questions.delete');
+    Route::delete('/courses/units/tests/questions/{question}/delete', 'delete')->name('questions.delete');
 
 });
 
@@ -230,6 +230,8 @@ Route::post('/reset-password/{user}', [ResetPasswordController::class, 'updatePa
 Route::get('/logout',[LoginController::class,'logout'])->name('logout');
 
 Route::get('testing', [TestingController::class, 'index']);
+
+
 
 
 

@@ -23,4 +23,9 @@ class Test extends Model
                     ->withTimestamps()
                     ->using(TestQuestion::class);
     }
+
+    public function lessons()
+    {
+        return $this->morphMany(Lesson::class,'lessonable');
+    }
 }

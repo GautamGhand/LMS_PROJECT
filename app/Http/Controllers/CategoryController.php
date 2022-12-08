@@ -34,7 +34,10 @@ class CategoryController extends Controller
             'user_id' => Auth::id()
         ];
     
-        $category=Category::where('name', $request->name)->withTrashed()->first();
+        $category=Category::where('name', $request->name)
+                ->withTrashed()
+                ->first();
+
         if ($category) {
             if ($category->deleted_at != null) {
                 $category->restore();
@@ -44,9 +47,9 @@ class CategoryController extends Controller
                     ->with('success', 'Category Created Successfully');
             }
         }
-        Category::create($attributes);
+        $category = Category::create($attributes);
 
-        return redirect()->route('categories.index')
+        return redirect()->route('categories.edit', $category)
             ->with('success', 'Successfully Created Category');
     }
     
@@ -68,7 +71,7 @@ class CategoryController extends Controller
             ]);
         $category->update($attributes);
 
-        return redirect()->route('categories.index')
+        return redirect()->route('categories.edit', $category)
             ->with('success', 'Successfully Updated Category');
     }
     public function destroy(Category $category)

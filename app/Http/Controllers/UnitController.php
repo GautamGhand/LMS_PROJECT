@@ -11,12 +11,12 @@ class UnitController extends Controller
 {
     public function create(Course $course)
     {
-        return view('units.create',[
+        return view('units.create', [
             'course'=>$course
         ]);
     }
 
-    public function store(Request $request,Course $course)
+    public function store(Request $request, Course $course)
     {
 
         $units=$request->validate([
@@ -31,24 +31,25 @@ class UnitController extends Controller
             'unit_id' => $unit->id
         ]);
 
-        if ($request->get('submit')=='Save') {
-            return redirect()->route('courses.show',$course)->with('success','Unit Added Successfully');
+        if ($request->get('submit') == 'Save' ) {
+            return redirect()->route('courses.show',$course)
+                ->with('success', 'Unit Added Successfully');
         }
 
-        return redirect()->route('units.create',$course)->with('success','Unit Added Successfully');
+        return redirect()->route('units.create', $course)
+            ->with('success', 'Unit Added Successfully');
 
     }
 
     public function edit(Course $course,Unit $unit)
     {
-
-        return view('units.edit',[
+        return view('units.edit', [
             'unit' => $unit,
             'course' => $course
         ]);
     }
 
-    public function update(Request $request,Course $course,Unit $unit)
+    public function update(Request $request, Course $course, Unit $unit)
     {
 
         $units=$request->validate([
@@ -58,7 +59,8 @@ class UnitController extends Controller
 
         $unit->update($units);
 
-        return redirect()->route('courses.show',$course)->with('success','Unit Updated Successfully');
+        return redirect()->route('courses.units.edit', [$course, $unit])
+            ->with('success', 'Unit Updated Successfully');
 
     }
 
@@ -66,7 +68,7 @@ class UnitController extends Controller
     {
         $unit->delete();
 
-        return back()->with('success','Unit Deleted Successfully');
+        return back()->with('success', 'Unit Deleted Successfully');
     }
     
 }

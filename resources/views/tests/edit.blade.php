@@ -14,36 +14,25 @@
     </div>
     <a href="{{ route('questions.create',[$course,$unit,$test]) }}" class="btn btn-primary">Add Questions</a>
     <h1 class="heading">Edit Test</h1>
-    <form method="POST" action="{{ route('tests.update',[$course,$unit,$test]) }}" class="create" id="form_units_create">
+    <form method="POST" action="{{ route('courses.units.tests.update',[$course,$unit,$test]) }}" class="create" id="form_units_create">
         @csrf
         <div>
             <label class="form-label">Test Name</label>
             <input type="text" name="name" class="form-control" value="{{ $test->name }}" required>
         </div>
-        <div class="text-danger">
-            @error('name')
-                {{$message}}
-            @enderror
-        </div>
+        <x-error name="name"/>
         <div>
             <label class="form-label">Duration Of Test</label>
             <input type="text" name="duration" class="form-control" value="{{$test->duration}}" required>
         </div>
-        <div class="text-danger">
-            @error('duration')
-                {{$message}}
-            @enderror
-        </div>
+        <x-error name="duration"/>
         <div>
             <label class="form-label">Pass Score</label>
             <input type="text" name="pass_score" class="form-control" value="{{ $test->pass_score }}" required/>
         </div>
-        <div class="text-danger">
-            @error('pass_score')
-                {{$message}}
-            @enderror
-        </div>
+        <x-error name="pass_score"/>
         <input type="submit" name="submit" class="btn btn-primary" value="Save">
+        <a href="{{ route('courses.units.edit', [$course, $unit]) }}" class="btn btn-danger">Cancel</a>
     </form>
     <div>
         <h1>Questions</h1>
@@ -56,7 +45,7 @@
         </div>
         <div class="buttons btnn">
             <a href="{{ route('questions.edit', [$course,$unit,$test,$question]) }}" class="btn btn-primary">Edit</a>
-            <form method="POST" action="{{ route('questions.delete', [$course,$unit,$test,$question]) }}">
+            <form method="POST" action="{{ route('questions.delete', $question) }}">
                 @csrf
                 @method('DELETE')
                 <input type="submit" name="submit" value="Delete" class="btn btn-danger">
